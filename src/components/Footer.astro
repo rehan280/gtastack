@@ -1,0 +1,115 @@
+---
+interface FooterLink {
+    title: string;
+    url: string;
+}
+
+interface FooterCategory {
+    title: string;
+    links: FooterLink[];
+}
+
+const categories: FooterCategory[] = [
+    {
+        title: "Database",
+        links: [
+            { title: "Vehicles", url: "/database" },
+            { title: "Weapons", url: "/database" },
+            { title: "Characters", url: "/characters" },
+            { title: "Properties", url: "/map" }
+        ]
+    },
+    {
+        title: "Intel",
+        links: [
+            { title: "Map Analysis", url: "/map" },
+            { title: "Rumor Mill", url: "/rumors" },
+            { title: "Trailer Breakdowns", url: "/news" },
+            { title: "Activities", url: "/activities" }
+        ]
+    },
+    {
+        title: "Community",
+        links: [
+            { title: "Forums", url: "#" },
+            { title: "Discord", url: "#" },
+            { title: "Fan Art", url: "#" },
+            { title: "Events", url: "#" }
+        ]
+    },
+    {
+        title: "Legal",
+        links: [
+            { title: "Privacy Policy", url: "#" },
+            { title: "Terms of Service", url: "#" },
+            { title: "Cookie Policy", url: "#" },
+            { title: "Contact", url: "#" }
+        ]
+    }
+];
+
+const socialLinks = [
+    { icon: "group", label: "Join our Discord", url: "#" },
+    { icon: "close", label: "Follow us on X", url: "#" },
+    { icon: "play_circle", label: "Subscribe on YouTube", url: "#" }
+];
+---
+
+<footer class="bg-[#0a0a0c] border-t border-primary/30 pt-16 pb-8 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5 pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(255,0,189,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,189,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+            <div class="lg:col-span-4">
+                <h2 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text mb-6" data-text="GTA STACK">GTA STACK</h2>
+                <p class="font-body-md text-on-surface-variant text-[14px] leading-relaxed mb-6">
+                    GTA STACK is the ultimate intelligence hub for Grand Theft Auto VI. We provide real-time data tracking, comprehensive map analysis, and verified leaks for the next generation of open-world gaming. Our mission is to document every corner of Leonida with surgical precision.
+                </p>
+                <div class="flex gap-4">
+                    {socialLinks.map((social) => (
+                        <a href={social.url} aria-label={social.label} class="w-10 h-10 border border-secondary-container/30 flex items-center justify-center text-secondary-container hover:bg-secondary-container/10 transition-all">
+                            <span class="material-symbols-outlined">{social.icon}</span>
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+                {categories.map((category) => (
+                    <div>
+                        <h4 class="font-data-label text-primary text-[12px] uppercase tracking-widest mb-6">{category.title}</h4>
+                        <ul class="flex flex-col gap-3">
+                            {category.links.map((link) => (
+                                <li>
+                                    <a href={link.url} class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">{link.title}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+        <div class="terminal-card p-8 mb-12 border-secondary-container/20">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="max-w-md">
+                    <h3 class="font-stat-value text-white text-[20px] mb-2 uppercase tracking-wide">Secure Intel Newsletter</h3>
+                    <p class="font-body-md text-on-surface-variant text-[14px]">Receive encrypted updates on GTA VI development and community discoveries directly to your terminal.</p>
+                </div>
+                <div class="w-full md:w-auto flex flex-col sm:flex-row gap-2">
+                    <input type="email" placeholder="USER@PROTOCOL.INTEL" aria-label="Email for newsletter" class="input-neon bg-black/50 text-secondary-container font-data-label px-4 py-3 w-full md:w-64 border border-secondary-container/30 focus:border-secondary-container">
+                    <button class="bg-secondary-container text-black font-data-label font-bold uppercase tracking-widest px-8 py-3 hover:bg-white transition-colors shadow-[0_0_15px_rgba(0,238,252,0.4)]">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#333340] gap-4">
+            <span class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">© 2026 GTA STACK PROTOCOL // ALL RIGHTS RESERVED</span>
+            <div class="sr-only">
+                GTA 6 Wiki, Grand Theft Auto VI Database, Leonida Map, GTA 6 Release Date, GTA 6 Leaks, Vice City 2, Rockstar Games Intel.
+            </div>
+            <div class="flex gap-6">
+                <span class="font-data-label text-[10px] text-primary uppercase tracking-widest">Status: Operational</span>
+                <span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">Region: Leonida</span>
+            </div>
+        </div>
+    </div>
+</footer>

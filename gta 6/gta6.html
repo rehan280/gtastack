@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GTA STACK - Database</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ff00bd",
+                        "secondary": "#00eefc",
+                        "tertiary": "#8b00ff",
+                        "background": "#0a0a0c",
+                        "surface": "#121215",
+                        "surface-container": "#1a1a1f",
+                        "surface-container-high": "#23232a",
+                        "on-surface": "#f0f0f5",
+                        "on-surface-variant": "#a0a0b0",
+                        "outline": "#333340"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Inter"],
+                        "stat-value": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "display-2xl": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+/* Vice Protocol Aesthetic Styles */
+body {
+    background-color: #0a0a0c;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(255, 0, 189, 0.05), transparent 40%), 
+        radial-gradient(circle at 85% 30%, rgba(0, 238, 252, 0.05), transparent 40%),
+        linear-gradient(rgba(255,0,189,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,189,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+    background-attachment: fixed;
+    color: #f0f0f5;
+}
+
+.glitch-text {
+    position: relative;
+}
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(10px, 9999px, 83px, 0); }
+    5% { clip: rect(61px, 9999px, 13px, 0); }
+    10% { clip: rect(50px, 9999px, 20px, 0); }
+    15% { clip: rect(11px, 9999px, 60px, 0); }
+    20% { clip: rect(31px, 9999px, 15px, 0); }
+    25% { clip: rect(78px, 9999px, 98px, 0); }
+    30% { clip: rect(96px, 9999px, 2px, 0); }
+    35% { clip: rect(64px, 9999px, 47px, 0); }
+    40% { clip: rect(89px, 9999px, 18px, 0); }
+    45% { clip: rect(56px, 9999px, 86px, 0); }
+    50% { clip: rect(3px, 9999px, 32px, 0); }
+    55% { clip: rect(38px, 9999px, 88px, 0); }
+    60% { clip: rect(15px, 9999px, 91px, 0); }
+    65% { clip: rect(69px, 9999px, 44px, 0); }
+    70% { clip: rect(4px, 9999px, 22px, 0); }
+    75% { clip: rect(99px, 9999px, 79px, 0); }
+    80% { clip: rect(48px, 9999px, 5px, 0); }
+    85% { clip: rect(25px, 9999px, 73px, 0); }
+    90% { clip: rect(82px, 9999px, 61px, 0); }
+    95% { clip: rect(34px, 9999px, 41px, 0); }
+    100% { clip: rect(19px, 9999px, 58px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    5% { clip: rect(52px, 9999px, 74px, 0); }
+    10% { clip: rect(79px, 9999px, 85px, 0); }
+    15% { clip: rect(75px, 9999px, 5px, 0); }
+    20% { clip: rect(67px, 9999px, 61px, 0); }
+    25% { clip: rect(14px, 9999px, 79px, 0); }
+    30% { clip: rect(1px, 9999px, 66px, 0); }
+    35% { clip: rect(86px, 9999px, 30px, 0); }
+    40% { clip: rect(23px, 9999px, 98px, 0); }
+    45% { clip: rect(85px, 9999px, 72px, 0); }
+    50% { clip: rect(71px, 9999px, 75px, 0); }
+    55% { clip: rect(2px, 9999px, 48px, 0); }
+    60% { clip: rect(30px, 9999px, 16px, 0); }
+    65% { clip: rect(59px, 9999px, 50px, 0); }
+    70% { clip: rect(41px, 9999px, 62px, 0); }
+    75% { clip: rect(2px, 9999px, 82px, 0); }
+    80% { clip: rect(47px, 9999px, 73px, 0); }
+    85% { clip: rect(3px, 9999px, 27px, 0); }
+    90% { clip: rect(26px, 9999px, 55px, 0); }
+    95% { clip: rect(42px, 9999px, 97px, 0); }
+    100% { clip: rect(38px, 9999px, 49px, 0); }
+}
+
+.dossier-card {
+    background: rgba(18, 18, 21, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 0, 189, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 189, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.dossier-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff00bd, transparent);
+    opacity: 0.5;
+}
+
+.dossier-card:hover {
+    border-color: rgba(255, 0, 189, 0.8);
+    box-shadow: 0 0 30px rgba(255, 0, 189, 0.2), inset 0 0 20px rgba(255, 0, 189, 0.1);
+}
+
+.hud-gauge {
+    display: flex;
+    gap: 2px;
+    height: 6px;
+}
+.hud-gauge-segment {
+    flex: 1;
+    background: #333340;
+    border-radius: 1px;
+}
+.hud-gauge-segment.active-primary {
+    background: #ff00bd;
+    box-shadow: 0 0 8px #ff00bd;
+}
+.hud-gauge-segment.active-secondary {
+    background: #00eefc;
+    box-shadow: 0 0 8px #00eefc;
+}
+
+.nav-link-active {
+    position: relative;
+    color: #ff00bd;
+}
+.nav-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #ff00bd;
+    box-shadow: 0 0 10px #ff00bd;
+}
+
+.input-neon {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #333340;
+    transition: all 0.3s;
+}
+.input-neon:focus {
+    border-color: #ff00bd;
+    box-shadow: 0 0 15px rgba(255,0,189,0.3);
+    outline: none;
+}
+</style>
+</head>
+<body class="antialiased min-h-screen flex font-body-md text-body-md text-on-surface">
+<!-- SIDE NAV -->
+<nav class="hidden lg:flex flex-col fixed left-0 top-0 h-full z-40 bg-[#0a0a0c]/90 backdrop-blur-md border-r border-[#333340] shadow-2xl w-64 pt-6 pb-6">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-4 mb-6">
+<img alt="User Profile" class="w-12 h-12 rounded-sm border border-primary/50 shadow-[0_0_10px_rgba(255,0,189,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXLxW9WsQjIgPmtiAStFUZt56zvOYJvL1b53rWNTfp_DO0jP5QLWyWp_BsEA4nWz5Nx9AUWvsD0xxkXY2FO3xipZzDLNWKxRculgRgAibzAOUPRPgxy5c7_j_U_XTJcnHY8StuCvwmfRpnRPRC52wNslTbRTv5DDQMacRkdFrCbY3qzg18_idaedEB_O9KRBzNaE3m4OKGa2DvH83dafEfIp6Fl85WxJ8tx8b22_2FmdG9sN9URTkZYL4Q-4bJcx4jpAIUsiPgyBg"/>
+<div>
+<h2 class="font-headline-lg-mobile text-[16px] text-on-surface uppercase tracking-wider">OPERATIVE</h2>
+<p class="font-data-label text-[12px] text-primary opacity-80">Rank 124</p>
+</div>
+</div>
+<button class="w-full bg-primary/10 border border-primary hover:bg-primary hover:text-black text-primary font-data-label text-[12px] py-2 rounded-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(255,0,189,0.2)]">
+                GET PRO ACCESS
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-2 space-y-1">
+<a class="bg-primary/20 text-primary border-l-2 border-primary px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Vehicles</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Weapons</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Map</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Cheats</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Calculators</span>
+</a>
+</div>
+<div class="px-2 mt-auto pt-6 border-t border-[#333340]">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Settings</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Support</span>
+</a>
+</div>
+</nav>
+<!-- MAIN CONTENT CANVAS -->
+<main class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+<!-- TOP NAV -->
+<header class="bg-[#0a0a0c]/80 backdrop-blur-xl top-0 sticky border-b border-[#333340] z-30">
+<div class="flex justify-between items-center w-full px-6 md:px-8 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="lg:hidden text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<h1 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text" data-text="GTA STACK">GTA STACK</h1>
+</div>
+<nav class="hidden md:flex gap-8 items-center h-full">
+<a class="nav-link-active font-bold text-[14px] uppercase tracking-widest h-full flex items-center" href="#">
+                        Database
+                    </a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors px-2 text-[14px] uppercase tracking-widest h-full flex items-center" href="#">
+                        News
+                    </a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors px-2 text-[14px] uppercase tracking-widest h-full flex items-center" href="#">
+                        Tools
+                    </a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors px-2 text-[14px] uppercase tracking-widest h-full flex items-center" href="#">
+                        Community
+                    </a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex relative w-64 items-center">
+<span class="material-symbols-outlined text-on-surface-variant absolute left-3 text-lg pointer-events-none">search</span>
+<input class="input-neon text-on-surface font-data-label text-[12px] w-full py-1.5 pl-10 pr-4 rounded-sm placeholder:text-on-surface-variant/50" placeholder="Search database..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 hover:bg-white/5 rounded-sm">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 hover:bg-white/5 rounded-sm">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- PAGE CONTENT -->
+<div class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-8 py-8" role="main">
+<!-- Page Header & Filters -->
+<div class="mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]" style="font-variation-settings: 'FILL' 1;">database</span>
+<h2 class="font-headline-lg text-[32px] md:text-[40px] text-on-surface uppercase tracking-tight glitch-text" data-text="Vehicle Registry">Vehicle Registry</h2>
+</div>
+<p class="font-data-label text-[12px] text-on-surface-variant max-w-2xl leading-relaxed">Access complete telemetry, performance metrics, and procurement details for all known vehicular assets within the Leonida sector.</p>
+</div>
+<!-- Quick Stats -->
+<div class="flex gap-6 bg-surface-container/80 p-4 rounded-sm border border-[#333340] backdrop-blur-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary shadow-[0_0_10px_rgba(255,0,189,0.8)]"></div>
+<div>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Total Indexed</p>
+<p class="font-stat-value text-[24px] text-secondary drop-shadow-[0_0_8px_rgba(0,238,252,0.8)]">1,402</p>
+</div>
+<div class="w-px bg-[#333340]"></div>
+<div>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">New This Week</p>
+<p class="font-stat-value text-[24px] text-primary drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]">+24</p>
+</div>
+</div>
+</div>
+<!-- Filter Controls -->
+<div class="dossier-card rounded-sm p-4 md:p-6 mb-8">
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Search & Class Filters -->
+<div class="flex-1 space-y-4">
+<div class="relative w-full">
+<span class="material-symbols-outlined text-primary absolute left-3 top-2.5 text-lg pointer-events-none">search</span>
+<input class="input-neon text-on-surface font-data-label text-[14px] w-full py-2.5 pl-10 pr-4 rounded-sm placeholder:text-on-surface-variant/50" placeholder="Query by model, make, or ID..." type="text"/>
+</div>
+<div class="flex flex-wrap gap-2 pt-2">
+<button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm bg-secondary/10 text-secondary border border-secondary shadow-[0_0_10px_rgba(0,238,252,0.2)] transition-all">Super</button>
+<button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary hover:shadow-[0_0_10px_rgba(255,0,189,0.2)] transition-all">Sports</button>
+<button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Muscle</button>
+<button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Off-Road</button>
+<button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Motorcycles</button>
+</div>
+</div>
+<div class="w-px bg-[#333340] hidden lg:block"></div>
+<!-- Stat Sliders (HUD Visuals) -->
+<div class="flex-1 space-y-6 flex flex-col justify-center">
+<div>
+<div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-2 tracking-widest uppercase">
+<span>TOP SPEED</span>
+<span class="text-secondary">&gt; 150 MPH</span>
+</div>
+<div class="hud-gauge">
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment active-secondary"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-2 tracking-widest uppercase">
+<span>ACCELERATION</span>
+<span class="text-primary">ANY</span>
+</div>
+<div class="hud-gauge">
+<div class="hud-gauge-segment active-primary"></div>
+<div class="hud-gauge-segment active-primary"></div>
+<div class="hud-gauge-segment active-primary"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+<div class="hud-gauge-segment"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid - Data Display -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- FEATURED CARD (Spans 2 cols on wide screens) -->
+<div class="dossier-card rounded-sm group md:col-span-2 xl:col-span-2 flex flex-col md:flex-row">
+<div class="w-full md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-[#121215]/90 z-10 hidden md:block"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#121215]/90 to-transparent z-10 md:hidden"></div>
+<img alt="Grotti Cheetah Classic" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-110 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_cfTwGJW-RWmu5b7qZPhxj0BlEBhXP1Orc4s6wLvQBvTlhZiybBSis018cCpPrvpsdUfXGStR8LApKYJzmuCvxaEvTeW1sJgFaF0hjzH6OslCdMjmW45ifo9n6-En4ZCGpKGCwBdJE-3EPr0He3SFJjQSt-uODF9r-zOWAUlUDEaI4q5r7fn37bHe_FKraHmN6JsnxwZSm4smsxxTg-1K-wHnptFYo_YQEaTgYcwlt9ym6Py0gaV41_jmsuEefQeL6YMglPkBgSg"/>
+<div class="absolute bottom-4 left-4 z-20">
+<span class="bg-primary/20 border border-primary text-primary px-2 py-1 font-data-label text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-[0_0_10px_rgba(255,0,189,0.5)] backdrop-blur-sm">TRENDING</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 p-6 flex flex-col justify-between z-20 relative">
+<!-- Decorative tech corners -->
+<div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary opacity-50"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary opacity-50"></div>
+<div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-data-label text-[10px] text-primary uppercase tracking-widest mb-1 shadow-primary">Grotti</p>
+<h3 class="font-headline-lg text-[32px] text-on-surface uppercase leading-none glitch-text" data-text="Cheetah Classic">Cheetah Classic</h3>
+</div>
+<span class="material-symbols-outlined text-secondary drop-shadow-[0_0_5px_rgba(0,238,252,0.8)]">sports_motorsports</span>
+</div>
+<p class="font-data-label text-[12px] text-on-surface-variant mb-8 leading-relaxed">The quintessential symbol of 80s excess. Retuned for modern streets, this classic sports car offers unmatched aesthetic appeal with surprisingly competitive straight-line performance.</p>
+<!-- Stat HUD -->
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-1 uppercase tracking-widest"><span>SPEED</span><span class="text-secondary">8.5/10</span></div>
+<div class="hud-gauge">
+<div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-1 uppercase tracking-widest"><span>ACCEL</span><span class="text-secondary">7.8/10</span></div>
+<div class="hud-gauge">
+<div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-1 uppercase tracking-widest"><span>HANDLING</span><span class="text-tertiary">6.5/10</span></div>
+<div class="hud-gauge">
+<div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment !bg-tertiary shadow-[0_0_8px_#8b00ff]"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-end justify-between mt-auto pt-4 border-t border-[#333340]">
+<div>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Est. Value</p>
+<p class="font-data-label text-[18px] text-on-surface font-bold text-[#00ff88] drop-shadow-[0_0_8px_rgba(0,255,136,0.5)]">¢865,000</p>
+</div>
+<button class="text-primary hover:text-secondary transition-colors font-data-label text-[12px] uppercase tracking-widest flex items-center gap-2 group/btn border border-primary/30 hover:border-secondary/50 px-4 py-2 rounded-sm bg-primary/5 hover:bg-secondary/5">
+                                DETAILS <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- STANDARD CARD 1 -->
+<div class="dossier-card rounded-sm group flex flex-col relative hover:border-secondary transition-colors">
+<div class="relative h-48 overflow-hidden border-b border-[#333340]">
+<img alt="Pegassi Zentorno" class="w-full h-full object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 filter contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLz_W_pv5D4AgvVPGMF1ZRP88IvJp9Rx1j64ROgb05EOlrcHsjWMNbMuqwNw97t1aB0JtRR-EC6oBnssad1EQ-kyZGkeG2Ei_OI7EtXQDApK9iIyHfqqnhYjA1Dv_hdcnvBQygxsEvgFdCxk0wDCJHF4s2nccShRXvvW5ZUbyR4cVQ3AE3aXvL8Xk3qIRcJp65_7SBJYX-xybggYeqbA2n6vKcmLBSENx_UmJaoHoCWNtpjwqBYpam_avOne4WKx74RsAcAWUnb10"/>
+</div>
+<div class="p-5 flex-1 flex flex-col relative">
+<!-- Decorative corner -->
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-secondary opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="mb-4">
+<p class="font-data-label text-[10px] text-secondary uppercase tracking-widest mb-1">Pegassi / Super</p>
+<h3 class="font-headline-lg text-[24px] text-on-surface uppercase leading-tight">Zentorno</h3>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-[#0a0a0c]/80 rounded-sm p-3 border border-[#333340]">
+<p class="font-data-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">Top Speed</p>
+<p class="font-data-label text-[14px] text-white">213 MPH</p>
+</div>
+<div class="bg-[#0a0a0c]/80 rounded-sm p-3 border border-[#333340]">
+<p class="font-data-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">Drivetrain</p>
+<p class="font-data-label text-[14px] text-white">AWD</p>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-end pt-2">
+<p class="font-data-label text-[14px] text-on-surface font-bold text-[#00ff88]">¢725,000</p>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors drop-shadow-[0_0_5px_rgba(0,238,252,0)] hover:drop-shadow-[0_0_5px_rgba(0,238,252,0.8)]">open_in_new</button>
+</div>
+</div>
+</div>
+<!-- STANDARD CARD 2 -->
+<div class="dossier-card rounded-sm group flex flex-col relative hover:border-[#ff3333] transition-colors">
+<div class="relative h-48 overflow-hidden bg-black flex items-center justify-center border-b border-[#333340]">
+<img alt="Heavy Rifle" class="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 filter sepia hue-rotate-[320deg] brightness-90 contrast-150" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWv8W2xNpt4_sTOO_-ufElqqmNJI44XwDNbZ7aauh4XedQTL8S6-qy3nvEWnhHjxx0vGlmxk1Mi5YVAh1AbqVIq7CfYsE0tD42i0Bb_w0qiBLJMz6Vtna_LwV5pLb0HrbPf7XAlA3xlRLLw8aEOS3IyzaPW1yQWB2BMdHGmVyfN-ZJlWi0o4Y4lsXWtWIuLhgcsYvHZtCtJ8KPxSCVBXE__So_J0dQ9rpYcLd-pPQB6VjaJzNSWMzYOQK-2cwtwJwvMFT8Lx_7HqM"/>
+<div class="absolute top-3 right-3">
+<span class="bg-[#ff3333]/20 text-[#ff3333] px-2 py-0.5 rounded-sm font-data-label text-[10px] uppercase tracking-widest border border-[#ff3333] shadow-[0_0_10px_rgba(255,51,51,0.5)] backdrop-blur-sm">RESTRICTED</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col relative">
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#ff3333] opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="mb-4">
+<p class="font-data-label text-[10px] text-tertiary uppercase tracking-widest mb-1">Vom Feuer / Assault Rifle</p>
+<h3 class="font-headline-lg text-[24px] text-on-surface uppercase leading-tight">Heavy Rifle</h3>
+</div>
+<!-- Simple HUD stats -->
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3">
+<span class="font-data-label text-[10px] w-8 text-on-surface-variant uppercase">DMG</span>
+<div class="hud-gauge flex-1"><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div></div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-data-label text-[10px] w-8 text-on-surface-variant uppercase">FR</span>
+<div class="hud-gauge flex-1"><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment !bg-white/70"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div></div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-data-label text-[10px] w-8 text-on-surface-variant uppercase">ACC</span>
+<div class="hud-gauge flex-1"><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div></div>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-end pt-2">
+<p class="font-data-label text-[14px] text-on-surface font-bold text-[#00ff88]">¢45,000</p>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-[#ff3333] transition-colors">open_in_new</button>
+</div>
+</div>
+</div>
+<!-- STANDARD CARD 3 -->
+<div class="dossier-card rounded-sm group flex flex-col relative hover:border-primary transition-colors">
+<div class="relative h-48 overflow-hidden border-b border-[#333340]">
+<img alt="Bati 801" class="w-full h-full object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 filter contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApbSze6veP7ZLDLyMGIGSi4VsQ-l7BkkL_W9b-8zw4aPCPb6vpa7egi-CHIL7v-VHJYnATlTf0wBVFHk6JIOtOp_gmuBPZhxrTMavz8eI1i_MxCoj3YHGH06RuhS3m59Ld6HBSdXCaMFe2VCVBz97GtiVA3FVPnnoESk-ZDAp6Y3DAhO6A-k2pJS2mOr_OCSLWlDljX28iRVPraEvCBjT5J4Uxv-4JqT97D1ATqYIqkZyqlsm9rVmd0FEbaDyZEf0hbTTs_myG9hg"/>
+</div>
+<div class="p-5 flex-1 flex flex-col relative">
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-primary opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<div class="mb-4">
+<p class="font-data-label text-[10px] text-primary uppercase tracking-widest mb-1">Pegassi / Motorcycle</p>
+<h3 class="font-headline-lg text-[24px] text-on-surface uppercase leading-tight">Bati 801</h3>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-[#0a0a0c]/80 rounded-sm p-3 border border-[#333340]">
+<p class="font-data-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">0-60 MPH</p>
+<p class="font-data-label text-[14px] text-white">2.3s</p>
+</div>
+<div class="bg-[#0a0a0c]/80 rounded-sm p-3 border border-[#333340]">
+<p class="font-data-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">Handling</p>
+<p class="font-data-label text-[14px] text-primary">Agile</p>
+</div>
+</div>
+<div class="mt-auto flex justify-between items-end pt-2">
+<p class="font-data-label text-[14px] text-on-surface font-bold text-[#00ff88]">¢15,000</p>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors hover:drop-shadow-[0_0_5px_rgba(255,0,189,0.8)]">open_in_new</button>
+</div>
+</div>
+</div>
+<!-- DATA LIST VIEW -->
+<div class="dossier-card rounded-sm overflow-hidden md:col-span-2 xl:col-span-3 p-0">
+<div class="px-6 py-4 border-b border-[#333340] flex justify-between items-center bg-[#1a1a1f]/50">
+<h3 class="font-data-label text-[14px] uppercase tracking-widest text-on-surface">Recent Additions</h3>
+<button class="font-data-label text-[10px] text-secondary hover:text-primary transition-colors uppercase tracking-widest border border-transparent hover:border-primary/50 px-2 py-1 rounded-sm">View All</button>
+</div>
+<div class="flex flex-col">
+<!-- List Item 1 -->
+<div class="group flex items-center gap-6 px-6 py-4 border-b border-[#333340] hover:bg-primary/5 transition-colors cursor-pointer relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary shadow-[0_0_10px_rgba(0,238,252,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="w-16 h-12 rounded-sm bg-[#0a0a0c] border border-[#333340] group-hover:border-secondary flex items-center justify-center overflow-hidden shrink-0 transition-colors">
+<img alt="Car Thumbnail" class="w-full h-full object-cover filter contrast-125 brightness-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7sLiSbIpabuvxcLwMKQjDe22lwDjsoMeXINbC93BVaLxN86x0ggw_s0MeduhjrpOyxlBcjcZAYTAMfeZz9nwm6djNS7OgMlFQ8cvh1wHteB_7XKNwa7fAo1UBMz7eRBChTw4MRww7-3MTPnsZ3fe2wGdSC1l6yLNTJ2DT7qViV7SNaDvhSqavlIFlgcu8hdHJEnXx2GlObMUQ6YBhliLprJXT12yvn_zyjHbpMt6fJOB4acG0tkc7e4vY2HS4mRg9XfsHbtTlFdw"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-lg text-[18px] uppercase text-on-surface truncate tracking-tight">Dominator GT</h4>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">Vapid / Muscle</p>
+</div>
+<div class="hidden md:flex items-center gap-12 mr-8">
+<div class="text-right w-24">
+<p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">SPEED</p>
+<div class="hud-gauge"><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment active-secondary"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div></div>
+</div>
+<div class="text-right w-16">
+<p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">CLASS</p>
+<span class="font-data-label text-[12px] text-white">S-Tier</span>
+</div>
+</div>
+<p class="font-data-label text-[14px] text-[#00ff88] font-bold w-24 text-right">¢1,250,000</p>
+</div>
+<!-- List Item 2 -->
+<div class="group flex items-center gap-6 px-6 py-4 hover:bg-primary/5 transition-colors cursor-pointer relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(255,0,189,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="w-16 h-12 rounded-sm bg-[#0a0a0c] border border-[#333340] group-hover:border-primary flex items-center justify-center overflow-hidden shrink-0 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">history</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-lg text-[18px] uppercase text-on-surface truncate tracking-tight">Tactical SMG</h4>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">Shrewsbury / Submachine Gun</p>
+</div>
+<div class="hidden md:flex items-center gap-12 mr-8">
+<div class="text-right w-24">
+<p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">DMG</p>
+<div class="hud-gauge"><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment !bg-[#ff3333] shadow-[0_0_5px_#ff3333]"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div></div>
+</div>
+<div class="text-right w-16">
+<p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">CLASS</p>
+<span class="font-data-label text-[12px] text-white">A-Tier</span>
+</div>
+</div>
+<p class="font-data-label text-[14px] text-[#00ff88] font-bold w-24 text-right">¢32,500</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="mt-12 flex justify-center">
+<button class="bg-transparent border border-on-surface-variant text-on-surface hover:border-primary hover:text-primary hover:shadow-[0_0_15px_rgba(255,0,189,0.3)] transition-all font-data-label text-[12px] uppercase tracking-widest px-8 py-3 rounded-sm flex items-center gap-3">
+<span class="material-symbols-outlined text-lg">autorenew</span> Load More Assets
+                </button>
+</div><section class="mt-16 pt-16 border-t border-[#333340] space-y-12">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-px flex-1 bg-gradient-to-r from-transparent to-[#333340]"></div>
+<h2 class="font-headline-lg text-[24px] text-primary uppercase tracking-widest glitch-text" data-text="DATA INSIGHTS &amp; FAQ">DATA INSIGHTS &amp; FAQ</h2>
+<div class="h-px flex-1 bg-gradient-to-l from-transparent to-[#333340]"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="dossier-card p-6 rounded-sm">
+<h3 class="font-data-label text-secondary text-[14px] mb-3 uppercase tracking-wider">What is the fastest vehicle in the Leonida Registry?</h3>
+<p class="text-on-surface-variant text-[14px] leading-relaxed">Currently, the Pegassi Zentorno leads the registry with a verified top speed of 213 MPH. Performance metrics are updated weekly based on telemetry data from the Leonida sector.</p>
+</div>
+<div class="dossier-card p-6 rounded-sm">
+<h3 class="font-data-label text-secondary text-[14px] mb-3 uppercase tracking-wider">How are weapon damage ratings calculated?</h3>
+<p class="text-on-surface-variant text-[14px] leading-relaxed">Damage (DMG) ratings are normalized on a 10-point scale based on ballistic impact tests against standard armor plating. The Heavy Rifle currently holds a 7.2/10 rating.</p>
+</div>
+<div class="dossier-card p-6 rounded-sm">
+<h3 class="font-data-label text-secondary text-[14px] mb-3 uppercase tracking-wider">Are these assets available for procurement?</h3>
+<p class="text-on-surface-variant text-[14px] leading-relaxed">Procurement costs (¢) are estimated market values. Restricted items, marked with the red 'RESTRICTED' tag, require specific clearance levels for legal acquisition.</p>
+</div>
+<div class="dossier-card p-6 rounded-sm">
+<h3 class="font-data-label text-secondary text-[14px] mb-3 uppercase tracking-wider">How often is the database indexed?</h3>
+<p class="text-on-surface-variant text-[14px] leading-relaxed">The GTA STACK database performs a full sector sweep every 24 hours. New additions are highlighted in the 'Recent Additions' ledger at the bottom of the registry.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- FOOTER -->
+<footer class="bg-[#0a0a0c] mt-auto w-full border-t border-[#333340] relative overflow-hidden">
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, #ff00bd 1px, #ff00bd 2px); background-size: 100% 4px;"></div>
+<div class="max-w-[1440px] mx-auto px-8 py-16 relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="space-y-6">
+<h2 class="font-display-2xl text-[32px] text-primary italic tracking-tighter uppercase glitch-text" data-text="GTA STACK">GTA STACK</h2>
+<p class="font-data-label text-[12px] text-on-surface-variant leading-relaxed uppercase tracking-wider">The definitive intelligence hub for the Leonida criminal underworld. Real-time telemetry, weapon specs, and tactical maps.</p>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-primary/30 pb-2 inline-block">Registry</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li><a class="hover:text-primary transition-colors" href="#">Super Cars</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Weaponry</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Tactical Gear</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Property</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-secondary/30 pb-2 inline-block">Resources</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li><a class="hover:text-secondary transition-colors" href="#">API Access</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Map Editor</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Cheat Codes</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Calculators</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-tertiary/30 pb-2 inline-block">Connect</h4>
+<div class="flex gap-4 mb-6">
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#"><span class="material-symbols-outlined text-lg">share</span></a>
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-secondary hover:text-secondary transition-all" href="#"><span class="material-symbols-outlined text-lg">rss_feed</span></a>
+</div>
+<p class="font-data-label text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Status: <span class="text-[#00ff88]">All Systems Operational</span></p>
+</div>
+</div>
+<div class="pt-8 border-t border-[#333340] flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2 font-data-label text-[10px] tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Legal</a>
+</div>
+<p class="font-data-label text-[9px] tracking-widest uppercase text-on-surface-variant/40 text-center md:text-right">
+                © 2024 GTA STACK. NOT AFFILIATED WITH ROCKSTAR GAMES. ALL TRADEMARKS BELONG TO THEIR RESPECTIVE OWNERS.
+            </p>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

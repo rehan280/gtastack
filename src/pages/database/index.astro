@@ -1,0 +1,413 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/layout/Sidebar.astro';
+
+interface AssetCard {
+  id: string;
+  type: 'featured' | 'standard';
+  title: string;
+  manufacturer: string;
+  category: string;
+  image: string;
+  price: string;
+  icon: string;
+  iconColor: string;
+  description?: string;
+  tag?: { text: string; class: string; };
+  stats: {
+    label: string;
+    value?: string;
+    gaugeLevel?: number;
+    gaugeColor?: 'primary' | 'secondary' | 'tertiary' | 'error';
+  }[];
+  hoverBorderClass: string;
+  hasBlurEffect?: boolean;
+}
+
+const assets: AssetCard[] = [
+  {
+    id: 'cheetah-classic',
+    type: 'featured',
+    title: 'Cheetah Classic',
+    manufacturer: 'Grotti',
+    category: 'Sports Classic',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_cfTwGJW-RWmu5b7qZPhxj0BlEBhXP1Orc4s6wLvQBvTlhZiybBSis018cCpPrvpsdUfXGStR8LApKYJzmuCvxaEvTeW1sJgFaF0hjzH6OslCdMjmW45ifo9n6-En4ZCGpKGCwBdJE-3EPr0He3SFJjQSt-uODF9r-zOWAUlUDEaI4q5r7fn37bHe_FKraHmN6JsnxwZSm4smsxxTg-1K-wHnptFYo_YQEaTgYcwlt9ym6Py0gaV41_jmsuEefQeL6YMglPkBgSg',
+    price: '¢865,000',
+    icon: 'sports_motorsports',
+    iconColor: 'text-secondary',
+    description: 'The quintessential symbol of 80s excess. Retuned for modern streets, this classic sports car offers unmatched aesthetic appeal with surprisingly competitive straight-line performance.',
+    tag: { text: 'TRENDING', class: 'bg-primary/20 border-primary text-primary shadow-[0_0_10px_rgba(255,0,189,0.5)]' },
+    hoverBorderClass: 'hover:border-primary',
+    stats: [
+      { label: 'SPEED', value: '8.5/10', gaugeLevel: 8, gaugeColor: 'secondary' },
+      { label: 'ACCEL', value: '7.8/10', gaugeLevel: 7, gaugeColor: 'secondary' },
+      { label: 'HANDLING', value: '6.5/10', gaugeLevel: 6, gaugeColor: 'tertiary' }
+    ]
+  },
+  {
+    id: 'zentorno',
+    type: 'standard',
+    title: 'Zentorno',
+    manufacturer: 'Pegassi',
+    category: 'Super',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLz_W_pv5D4AgvVPGMF1ZRP88IvJp9Rx1j64ROgb05EOlrcHsjWMNbMuqwNw97t1aB0JtRR-EC6oBnssad1EQ-kyZGkeG2Ei_OI7EtXQDApK9iIyHfqqnhYjA1Dv_hdcnvBQygxsEvgFdCxk0wDCJHF4s2nccShRXvvW5ZUbyR4cVQ3AE3aXvL8Xk3qIRcJp65_7SBJYX-xybggYeqbA2n6vKcmLBSENx_UmJaoHoCWNtpjwqBYpam_avOne4WKx74RsAcAWUnb10',
+    price: '¢725,000',
+    icon: 'directions_car',
+    iconColor: 'text-secondary',
+    tag: undefined,
+    hoverBorderClass: 'hover:border-secondary',
+    stats: [
+      { label: 'Top Speed', value: '213 MPH' },
+      { label: 'Drivetrain', value: 'AWD' }
+    ]
+  },
+  {
+    id: 'heavy-rifle',
+    type: 'standard',
+    title: 'Heavy Rifle',
+    manufacturer: 'Vom Feuer',
+    category: 'Assault Rifle',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAWv8W2xNpt4_sTOO_-ufElqqmNJI44XwDNbZ7aauh4XedQTL8S6-qy3nvEWnhHjxx0vGlmxk1Mi5YVAh1AbqVIq7CfYsE0tD42i0Bb_w0qiBLJMz6Vtna_LwV5pLb0HrbPf7XAlA3xlRLLw8aEOS3IyzaPW1yQWB2BMdHGmVyfN-ZJlWi0o4Y4lsXWtWIuLhgcsYvHZtCtJ8KPxSCVBXE__So_J0dQ9rpYcLd-pPQB6VjaJzNSWMzYOQK-2cwtwJwvMFT8Lx_7HqM',
+    price: '¢45,000',
+    icon: 'swords',
+    iconColor: 'text-[#ff3333]',
+    tag: { text: 'RESTRICTED', class: 'bg-[#ff3333]/20 text-[#ff3333] border-[#ff3333] shadow-[0_0_10px_rgba(255,51,51,0.5)]' },
+    hoverBorderClass: 'hover:border-[#ff3333]',
+    stats: [
+      { label: 'DMG', gaugeLevel: 7, gaugeColor: 'error' },
+      { label: 'FR', gaugeLevel: 6, gaugeColor: 'primary' },
+      { label: 'ACC', gaugeLevel: 8, gaugeColor: 'secondary' }
+    ]
+  },
+  {
+    id: 'bati-801',
+    type: 'standard',
+    title: 'Bati 801',
+    manufacturer: 'Pegassi',
+    category: 'Motorcycle',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuApbSze6veP7ZLDLyMGIGSi4VsQ-l7BkkL_W9b-8zw4aPCPb6vpa7egi-CHIL7v-VHJYnATlTf0wBVFHk6JIOtOp_gmuBPZhxrTMavz8eI1i_MxCoj3YHGH06RuhS3m59Ld6HBSdXCaMFe2VCVBz97GtiVA3FVPnnoESk-ZDAp6Y3DAhO6A-k2pJS2mOr_OCSLWlDljX28iRVPraEvCBjT5J4Uxv-4JqT97D1ATqYIqkZyqlsm9rVmd0FEbaDyZEf0hbTTs_myG9hg',
+    price: '¢15,000',
+    icon: 'two_wheeler',
+    iconColor: 'text-primary',
+    tag: undefined,
+    hoverBorderClass: 'hover:border-primary',
+    stats: [
+      { label: '0-60 MPH', value: '2.3s' },
+      { label: 'Handling', value: 'Agile' }
+    ]
+  }
+];
+
+const listAdditions = [
+  {
+    title: 'Dominator GT',
+    subtitle: 'Vapid / Muscle',
+    price: '¢1,250,000',
+    speed: 8,
+    class: 'S-Tier',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7sLiSbIpabuvxcLwMKQjDe22lwDjsoMeXINbC93BVaLxN86x0ggw_s0MeduhjrpOyxlBcjcZAYTAMfeZz9nwm6djNS7OgMlFQ8cvh1wHteB_7XKNwa7fAo1UBMz7eRBChTw4MRww7-3MTPnsZ3fe2wGdSC1l6yLNTJ2DT7qViV7SNaDvhSqavlIFlgcu8hdHJEnXx2GlObMUQ6YBhliLprJXT12yvn_zyjHbpMt6fJOB4acG0tkc7e4vY2HS4mRg9XfsHbtTlFdw',
+    hoverClass: 'hover:bg-primary/5',
+    indicatorClass: 'bg-secondary shadow-[0_0_10px_rgba(0,238,252,0.8)]'
+  },
+  {
+    title: 'Tactical SMG',
+    subtitle: 'Shrewsbury / Submachine Gun',
+    price: '¢32,500',
+    speed: 4,
+    speedColor: 'error',
+    speedLabel: 'DMG',
+    class: 'A-Tier',
+    icon: 'history',
+    hoverClass: 'hover:bg-primary/5',
+    indicatorClass: 'bg-primary shadow-[0_0_10px_rgba(255,0,189,0.8)]'
+  }
+];
+
+const faqs = [
+  {
+    q: 'What is the fastest vehicle in the Leonida Registry?',
+    a: 'Currently, the Pegassi Zentorno leads the registry with a verified top speed of 213 MPH. Performance metrics are updated weekly based on telemetry data from the Leonida sector.'
+  },
+  {
+    q: 'How are weapon damage ratings calculated?',
+    a: 'Damage (DMG) ratings are normalized on a 10-point scale based on ballistic impact tests against standard armor plating. The Heavy Rifle currently holds a 7.2/10 rating.'
+  },
+  {
+    q: 'Are these assets available for procurement?',
+    a: 'Procurement costs (¢) are estimated market values. Restricted items, marked with the red "RESTRICTED" tag, require specific clearance levels for legal acquisition.'
+  },
+  {
+    q: 'How often is the database indexed?',
+    a: 'The GTA STACK database performs a full sector sweep every 24 hours. New additions are highlighted in the "Recent Additions" ledger at the bottom of the registry.'
+  }
+];
+
+function getGaugeClass(color: string | undefined) {
+  if (color === 'primary') return 'active-primary';
+  if (color === 'secondary') return 'active-secondary';
+  if (color === 'tertiary') return '!bg-[#8b00ff] shadow-[0_0_8px_#8b00ff]';
+  if (color === 'error') return '!bg-[#ff3333] shadow-[0_0_5px_#ff3333]';
+  return 'active-secondary'; // default
+}
+---
+
+<Layout title="Vehicle & Weapon Registry | GTA STACK">
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Overlay nav (simulated sticky) -->
+    <Sidebar />
+
+    <main class="flex-1 overflow-y-auto" role="main">
+      <div class="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-8">
+        <!-- Page Header & Filters -->
+        <div class="mb-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <span class="material-symbols-outlined text-primary text-3xl drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]" style="font-variation-settings: 'FILL' 1;">database</span>
+                <h2 class="font-headline-lg text-[32px] md:text-[40px] text-on-surface uppercase tracking-tight glitch-text" data-text="Vehicle Registry">Vehicle Registry</h2>
+              </div>
+              <p class="font-data-label text-[12px] text-on-surface-variant max-w-2xl leading-relaxed">Access complete telemetry, performance metrics, and procurement details for all known vehicular assets within the Leonida sector.</p>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="flex gap-6 bg-surface-container/80 p-4 rounded-sm border border-[#333340] backdrop-blur-md relative overflow-hidden shrink-0">
+              <div class="absolute top-0 left-0 w-1 h-full bg-primary shadow-[0_0_10px_rgba(255,0,189,0.8)]"></div>
+              <div>
+                <p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Total Indexed</p>
+                <p class="font-stat-value text-[24px] text-secondary drop-shadow-[0_0_8px_rgba(0,238,252,0.8)]">1,402</p>
+              </div>
+              <div class="w-px bg-[#333340]"></div>
+              <div>
+                <p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">New This Week</p>
+                <p class="font-stat-value text-[24px] text-primary drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]">+24</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Filter Controls -->
+          <div class="terminal-card rounded-sm p-4 md:p-6 mb-8 bg-surface-container/50">
+            <div class="flex flex-col lg:flex-row gap-8">
+              <!-- Search & Class Filters -->
+              <div class="flex-1 space-y-4">
+                <div class="relative w-full">
+                  <span class="material-symbols-outlined text-primary absolute left-3 top-2.5 text-lg pointer-events-none">search</span>
+                  <input class="input-neon text-on-surface font-data-label text-[14px] w-full py-2.5 pl-10 pr-4 rounded-sm placeholder:text-on-surface-variant/50" placeholder="Query by model, make, or ID..." type="text"/>
+                </div>
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm bg-secondary/10 text-secondary border border-secondary shadow-[0_0_10px_rgba(0,238,252,0.2)] transition-all">Super</button>
+                  <button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary hover:shadow-[0_0_10px_rgba(255,0,189,0.2)] transition-all">Sports</button>
+                  <button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Muscle</button>
+                  <button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Off-Road</button>
+                  <button class="font-data-label text-[12px] px-3 py-1.5 rounded-sm border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary transition-all">Motorcycles</button>
+                </div>
+              </div>
+              
+              <div class="w-px bg-[#333340] hidden lg:block"></div>
+              
+              <!-- Stat Sliders (HUD Visuals) -->
+              <div class="flex-1 space-y-6 flex flex-col justify-center">
+                <div>
+                  <div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-2 tracking-widest uppercase">
+                    <span>TOP SPEED</span>
+                    <span class="text-secondary">&gt; 150 MPH</span>
+                  </div>
+                  <div class="hud-gauge">
+                    {Array.from({length: 10}).map((_, i) => (
+                      <div class={`hud-gauge-segment ${i < 8 ? 'active-secondary' : ''}`}></div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-2 tracking-widest uppercase">
+                    <span>ACCELERATION</span>
+                    <span class="text-primary">ANY</span>
+                  </div>
+                  <div class="hud-gauge">
+                    {Array.from({length: 10}).map((_, i) => (
+                      <div class={`hud-gauge-segment ${i < 3 ? 'active-primary' : ''}`}></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid - Data Display -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {assets.map((asset) => (
+            asset.type === 'featured' ? (
+              <!-- FEATURED CARD (Spans 2 cols on wide screens) -->
+              <div class="terminal-card rounded-sm group md:col-span-2 xl:col-span-2 flex flex-col md:flex-row bg-surface-container/50">
+                <div class="w-full md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent to-[#121215]/90 z-10 hidden md:block"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#121215]/90 to-transparent z-10 md:hidden"></div>
+                  <img alt={asset.title} class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-110 contrast-125" src={asset.image}/>
+                  {asset.tag && (
+                    <div class="absolute bottom-4 left-4 z-20">
+                      <span class={`border px-2 py-1 font-data-label text-[10px] font-bold uppercase tracking-widest rounded-sm backdrop-blur-sm ${asset.tag.class}`}>{asset.tag.text}</span>
+                    </div>
+                  )}
+                </div>
+                <div class="w-full md:w-1/2 p-6 flex flex-col justify-between z-20 relative">
+                  <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary opacity-50"></div>
+                  <div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary opacity-50"></div>
+                  <div>
+                    <div class="flex justify-between items-start mb-4">
+                      <div>
+                        <p class="font-data-label text-[10px] text-primary uppercase tracking-widest mb-1 shadow-primary">{asset.manufacturer}</p>
+                        <h3 class="font-headline-lg text-[32px] text-on-surface uppercase leading-none glitch-text" data-text={asset.title}>{asset.title}</h3>
+                      </div>
+                      <span class={`material-symbols-outlined drop-shadow-[0_0_5px_currentColor] ${asset.iconColor}`}>{asset.icon}</span>
+                    </div>
+                    <p class="font-data-label text-[12px] text-on-surface-variant mb-8 leading-relaxed">{asset.description}</p>
+                    
+                    <div class="space-y-4 mb-6">
+                      {asset.stats.map(stat => (
+                        <div>
+                          <div class="flex justify-between font-data-label text-[10px] text-on-surface-variant mb-1 uppercase tracking-widest">
+                            <span>{stat.label}</span>
+                            <span class={stat.gaugeColor ? `text-${stat.gaugeColor}` : ''}>{stat.value}</span>
+                          </div>
+                          {stat.gaugeLevel !== undefined && (
+                            <div class="hud-gauge">
+                              {Array.from({length: 10}).map((_, i) => (
+                                <div class={`hud-gauge-segment ${i < stat.gaugeLevel! ? getGaugeClass(stat.gaugeColor) : ''}`}></div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div class="flex items-end justify-between mt-auto pt-4 border-t border-[#333340]">
+                    <div>
+                      <p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Est. Value</p>
+                      <p class="font-data-label text-[18px] text-on-surface font-bold text-[#00ff88] drop-shadow-[0_0_8px_rgba(0,255,136,0.5)]">{asset.price}</p>
+                    </div>
+                    <button class="text-primary hover:text-secondary transition-colors font-data-label text-[12px] uppercase tracking-widest flex items-center gap-2 group/btn border border-primary/30 hover:border-secondary/50 px-4 py-2 rounded-sm bg-primary/5 hover:bg-secondary/5">
+                      DETAILS <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <!-- STANDARD CARD -->
+              <div class={`terminal-card rounded-sm group flex flex-col relative transition-colors ${asset.hoverBorderClass}`}>
+                <div class="relative h-48 overflow-hidden bg-black flex items-center justify-center border-b border-[#333340]">
+                  <img alt={asset.title} class={`w-full h-full object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 ${asset.category === 'Assault Rifle' ? 'filter sepia hue-rotate-[320deg] brightness-90 contrast-150 opacity-80' : 'filter contrast-125'}`} src={asset.image}/>
+                  {asset.tag && (
+                    <div class="absolute top-3 right-3 z-20">
+                      <span class={`border px-2 py-0.5 rounded-sm font-data-label text-[10px] uppercase tracking-widest backdrop-blur-sm ${asset.tag.class}`}>{asset.tag.text}</span>
+                    </div>
+                  )}
+                </div>
+                <div class="p-5 flex-1 flex flex-col relative bg-surface-container/50">
+                  <div class={`absolute bottom-0 right-0 w-3 h-3 border-b border-r opacity-50 group-hover:opacity-100 transition-opacity ${asset.iconColor.replace('text-', 'border-')}`}></div>
+                  <div class="mb-4">
+                    <p class={`font-data-label text-[10px] uppercase tracking-widest mb-1 ${asset.iconColor}`}>{asset.manufacturer} / {asset.category}</p>
+                    <h3 class="font-headline-lg text-[24px] text-on-surface uppercase leading-tight">{asset.title}</h3>
+                  </div>
+                  
+                  {asset.stats[0]?.value ? (
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                      {asset.stats.map(stat => (
+                        <div class="bg-[#0a0a0c]/80 rounded-sm p-3 border border-[#333340]">
+                          <p class="font-data-label text-[9px] text-on-surface-variant uppercase tracking-widest mb-1">{stat.label}</p>
+                          <p class={`font-data-label text-[14px] ${stat.label === 'Handling' ? 'text-primary' : 'text-white'}`}>{stat.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div class="space-y-3 mb-6">
+                      {asset.stats.map(stat => (
+                        <div class="flex items-center gap-3">
+                          <span class="font-data-label text-[10px] w-8 text-on-surface-variant uppercase">{stat.label}</span>
+                          <div class="hud-gauge flex-1">
+                            {Array.from({length: 10}).map((_, i) => (
+                              <div class={`hud-gauge-segment ${i < stat.gaugeLevel! ? (stat.gaugeColor === 'error' ? '!bg-[#ff3333] shadow-[0_0_5px_#ff3333]' : 'active-secondary') : ''}`}></div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <div class="mt-auto flex justify-between items-end pt-2">
+                    <p class="font-data-label text-[14px] text-on-surface font-bold text-[#00ff88]">{asset.price}</p>
+                    <button class={`material-symbols-outlined text-on-surface-variant transition-colors hover:drop-shadow-[0_0_5px_currentColor] ${asset.hoverBorderClass.replace('border-', 'text-').replace('hover:', 'hover:')}`}>open_in_new</button>
+                  </div>
+                </div>
+              </div>
+            )
+          ))}
+
+          <!-- DATA LIST VIEW -->
+          <div class="terminal-card rounded-sm overflow-hidden md:col-span-2 xl:col-span-3 p-0 bg-surface-container/50">
+            <div class="px-6 py-4 border-b border-[#333340] flex justify-between items-center bg-[#1a1a1f]/50">
+              <h3 class="font-data-label text-[14px] uppercase tracking-widest text-on-surface">Recent Additions</h3>
+              <button class="font-data-label text-[10px] text-secondary hover:text-primary transition-colors uppercase tracking-widest border border-transparent hover:border-primary/50 px-2 py-1 rounded-sm">View All</button>
+            </div>
+            <div class="flex flex-col">
+              {listAdditions.map(item => (
+                <div class={`group flex items-center gap-6 px-6 py-4 border-b border-[#333340] last:border-0 transition-colors cursor-pointer relative ${item.hoverClass}`}>
+                  <div class={`absolute left-0 top-0 bottom-0 w-1 scale-y-0 group-hover:scale-y-100 transition-transform origin-center ${item.indicatorClass}`}></div>
+                  <div class={`w-16 h-12 rounded-sm bg-[#0a0a0c] border border-[#333340] flex items-center justify-center overflow-hidden shrink-0 transition-colors ${item.icon ? 'group-hover:border-primary' : 'group-hover:border-secondary'}`}>
+                    {item.image ? (
+                      <img alt="Thumbnail" class="w-full h-full object-cover filter contrast-125 brightness-90" src={item.image}/>
+                    ) : (
+                      <span class={`material-symbols-outlined text-on-surface-variant transition-colors ${item.icon === 'history' ? 'group-hover:text-primary' : ''}`}>{item.icon}</span>
+                    )}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-headline-lg text-[18px] uppercase text-on-surface truncate tracking-tight">{item.title}</h4>
+                    <p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">{item.subtitle}</p>
+                  </div>
+                  <div class="hidden md:flex items-center gap-12 mr-8">
+                    <div class="text-right w-24">
+                      <p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">{item.speedLabel || 'SPEED'}</p>
+                      <div class="hud-gauge">
+                        {Array.from({length: 10}).map((_, i) => (
+                          <div class={`hud-gauge-segment ${i < item.speed ? (item.speedColor === 'error' ? '!bg-[#ff3333] shadow-[0_0_5px_#ff3333]' : 'active-secondary') : ''}`}></div>
+                        ))}
+                      </div>
+                    </div>
+                    <div class="text-right w-16">
+                      <p class="font-data-label text-[9px] text-on-surface-variant mb-1 uppercase tracking-widest">CLASS</p>
+                      <span class="font-data-label text-[12px] text-white">{item.class}</span>
+                    </div>
+                  </div>
+                  <p class="font-data-label text-[14px] text-[#00ff88] font-bold w-24 text-right">{item.price}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="mt-12 flex justify-center">
+          <button class="bg-transparent border border-on-surface-variant text-on-surface hover:border-primary hover:text-primary hover:shadow-[0_0_15px_rgba(255,0,189,0.3)] transition-all font-data-label text-[12px] uppercase tracking-widest px-8 py-3 rounded-sm flex items-center gap-3">
+            <span class="material-symbols-outlined text-lg">autorenew</span> Load More Assets
+          </button>
+        </div>
+
+        <section class="mt-16 pt-16 border-t border-[#333340] space-y-12">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-gradient-to-r from-transparent to-[#333340]"></div>
+            <h2 class="font-headline-lg text-[24px] text-primary uppercase tracking-widest glitch-text" data-text="DATA INSIGHTS & FAQ">DATA INSIGHTS & FAQ</h2>
+            <div class="h-px flex-1 bg-gradient-to-l from-transparent to-[#333340]"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {faqs.map(faq => (
+              <div class="terminal-card p-6 rounded-sm bg-surface-container/50">
+                <h3 class="font-data-label text-secondary text-[14px] mb-3 uppercase tracking-wider">{faq.q}</h3>
+                <p class="text-on-surface-variant text-[14px] leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</Layout>

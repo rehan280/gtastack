@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Featured from '../components/Featured.astro';
+import SidebarNews from '../components/SidebarNews.astro';
+import DatabaseUpdates from '../components/DatabaseUpdates.astro';
+import DailyModules from '../components/DailyModules.astro';
+import RumorMill from '../components/RumorMill.astro';
+---
+
+<Layout title="GTA STACK - The Complete Grand Theft Auto VI Wiki & Resource">
+	
+	<main class="flex-1 w-full relative z-10">
+		<Hero />
+		
+		<!-- Main Content Bento Grid -->
+		<div class="max-w-[1440px] mx-auto px-4 md:px-8 py-12 bento-grid">
+			<Featured />
+			<SidebarNews />
+			<DatabaseUpdates />
+			
+			<!-- Daily Modules & Rumors (Span 12, Sub-grid) -->
+			<div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<DailyModules />
+				<RumorMill />
+			</div>
+		</div>
+	</main>
+</Layout>

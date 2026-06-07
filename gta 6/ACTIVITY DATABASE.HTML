@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GTA STACK - Activities &amp; Mini-Games Database</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary": "#ff00bd",
+                "secondary": "#00eefc",
+                "tertiary": "#8b00ff",
+                "background": "#0a0a0c",
+                "surface": "#121215",
+                "surface-container": "#1a1a1f",
+                "surface-container-high": "#23232a",
+                "on-surface": "#f0f0f5",
+                "on-surface-variant": "#a0a0b0",
+                "outline": "#333340",
+                "secondary-container": "#00eefc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "stack-lg": "48px",
+                    "container-max": "1440px",
+                    "base": "8px",
+                    "stack-md": "24px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "data-label": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-2xl": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "stat-value": ["Inter"]
+            },
+            "fontSize": {
+                    "data-label": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "headline-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "display-2xl": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "900" }],
+                    "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                    "stat-value": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Base Dark Mode Settings */
+        body {
+            background-color: #0a0a0c;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 0, 189, 0.05), transparent 40%), 
+                radial-gradient(circle at 85% 30%, rgba(0, 238, 252, 0.05), transparent 40%),
+                linear-gradient(rgba(255,0,189,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,0,189,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            background-attachment: fixed;
+            color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 83px, 0); }
+            5% { clip: rect(61px, 9999px, 13px, 0); }
+            10% { clip: rect(50px, 9999px, 20px, 0); }
+            15% { clip: rect(11px, 9999px, 60px, 0); }
+            20% { clip: rect(31px, 9999px, 15px, 0); }
+            25% { clip: rect(78px, 9999px, 98px, 0); }
+            30% { clip: rect(96px, 9999px, 2px, 0); }
+            35% { clip: rect(64px, 9999px, 47px, 0); }
+            40% { clip: rect(89px, 9999px, 18px, 0); }
+            45% { clip: rect(56px, 9999px, 86px, 0); }
+            50% { clip: rect(3px, 9999px, 32px, 0); }
+            55% { clip: rect(38px, 9999px, 88px, 0); }
+            60% { clip: rect(15px, 9999px, 91px, 0); }
+            65% { clip: rect(69px, 9999px, 44px, 0); }
+            70% { clip: rect(4px, 9999px, 22px, 0); }
+            75% { clip: rect(99px, 9999px, 79px, 0); }
+            80% { clip: rect(48px, 9999px, 5px, 0); }
+            85% { clip: rect(25px, 9999px, 73px, 0); }
+            90% { clip: rect(82px, 9999px, 61px, 0); }
+            95% { clip: rect(34px, 9999px, 41px, 0); }
+            100% { clip: rect(19px, 9999px, 58px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+
+        .terminal-card {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 189, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 189, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff00bd, transparent);
+            opacity: 0.5;
+        }
+
+        .terminal-card:hover {
+            border-color: rgba(255, 0, 189, 0.8);
+            box-shadow: 0 0 30px rgba(255, 0, 189, 0.2), inset 0 0 20px rgba(255, 0, 189, 0.1);
+        }
+        
+        .terminal-header {
+            border-bottom: 1px solid rgba(51, 51, 64, 0.8);
+            background: rgba(26, 26, 31, 0.5);
+        }
+
+        /* Neon Glows */
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(255, 0, 189, 0.5);
+        }
+        .glow-secondary {
+            box-shadow: 0 0 20px rgba(0, 238, 252, 0.5);
+        }
+        .glow-tertiary {
+            box-shadow: 0 0 20px rgba(139, 0, 255, 0.5);
+        }
+
+        .text-glow-primary {
+            text-shadow: 0 0 10px rgba(255, 0, 189, 0.8);
+        }
+
+        /* Hover left accent */
+        .hover-left-accent {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .hover-left-accent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background-color: theme('colors.primary');
+            transition: width 0.2s ease;
+        }
+        .hover-left-accent:hover::before {
+            width: 4px;
+        }
+        .hover-left-accent:hover {
+            padding-left: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333340;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00bd;
+        }
+        
+        .input-neon {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333340;
+            transition: all 0.3s;
+        }
+        .input-neon:focus {
+            border-color: #ff00bd;
+            box-shadow: 0 0 15px rgba(255,0,189,0.3);
+            outline: none;
+        }
+
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden antialiased">
+<!-- TopNavBar -->
+<header class="bg-[#0a0a0c]/80 backdrop-blur-xl top-0 sticky border-b border-[#333340] z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2" href="/">
+<h1 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text" data-text="GTA STACK">GTA STACK</h1>
+<div class="hidden lg:flex flex-col ml-4">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest leading-none mb-1 opacity-80">&gt; SYS.COUNTDOWN:</span>
+<span class="font-data-label text-[12px] text-primary font-bold leading-none tracking-wider">166D:04H:31M <span class="text-secondary-container ml-2 text-[10px] uppercase border border-secondary-container/30 px-1 py-0.5 rounded-sm">Out Now</span></span>
+</div>
+</a>
+</div>
+<nav class="hidden lg:flex items-center gap-1">
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Vehicles</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Weapons</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Characters</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Regions</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Activities</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Rumors</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Games</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<a class="hidden md:flex text-secondary-container hover:text-primary font-data-label text-[12px] font-semibold transition-colors border border-secondary-container/30 px-3 py-1.5 rounded-sm uppercase tracking-wide" href="#">Sign in</a>
+<button class="lg:hidden text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto relative pt-8 pb-16 gap-8 px-4 md:px-8">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden lg:flex flex-col w-64 flex-shrink-0 relative z-10 terminal-card rounded-sm h-[calc(100vh-140px)] sticky top-[100px] overflow-y-auto">
+<div class="p-6 border-b border-[#333340]">
+<div class="font-data-label text-[10px] tracking-widest text-on-surface-variant mb-1">OPERATIVE</div>
+<div class="font-display-2xl text-[24px] text-primary text-glow-primary">Rank 124</div>
+</div>
+<nav class="flex-grow py-4 flex flex-col gap-1 font-data-label text-[12px]">
+<a class="text-on-surface-variant hover:text-on-surface px-6 py-3 flex items-center gap-3 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xl">directions_car</span>
+                     Vehicles
+                 </a>
+<a class="text-on-surface-variant hover:text-on-surface px-6 py-3 flex items-center gap-3 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xl">history</span>
+                     Weapons
+                 </a>
+<a class="text-on-surface-variant hover:text-on-surface px-6 py-3 flex items-center gap-3 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xl">map</span>
+                     Map
+                 </a>
+<a class="bg-secondary/10 text-secondary border-l-2 border-secondary px-6 py-3 flex items-center gap-3 shadow-[0_0_10px_rgba(0,238,252,0.1)] uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xl">terminal</span>
+                     Activities
+                 </a>
+<a class="text-on-surface-variant hover:text-on-surface px-6 py-3 flex items-center gap-3 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-xl">calculate</span>
+                     Calculators
+                 </a>
+</nav>
+<div class="p-6 border-t border-[#333340]">
+<button class="w-full bg-primary/10 border border-primary hover:bg-primary hover:text-black text-primary font-data-label text-[12px] py-2 rounded-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(255,0,189,0.2)]">
+                     GET PRO ACCESS
+                 </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<div class="flex-grow flex flex-col gap-12 w-full min-w-0">
+<!-- Header Section -->
+<header class="flex flex-col gap-2">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-[32px] md:text-[40px] text-on-surface uppercase tracking-tight glitch-text" data-text="Activities Database">
+                    Activities Database
+                </h1>
+<p class="text-on-surface-variant max-w-2xl text-[14px]">
+                    Comprehensive ledger of side-hustles, mini-games, and illicit opportunities across Vice City. Filter by risk-reward ratios and character affinity.
+                </p>
+</header>
+<!-- Daily Mini-Games (Bento Grid) -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary">casino</span>
+<h2 class="font-data-label text-[14px] text-secondary uppercase tracking-widest">Daily Mini-Games</h2>
+<div class="h-px bg-[#333340] flex-grow ml-4"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Chop Shop -->
+<div class="terminal-card rounded-sm flex flex-col group relative overflow-hidden h-full border-t border-t-primary">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full pointer-events-none"></div>
+<div class="p-6 flex flex-col gap-4 h-full relative z-10">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-stat-value text-[20px] text-on-surface uppercase mb-1 group-hover:text-primary transition-colors">Chop Shop</h3>
+<div class="font-data-label text-[10px] text-primary px-2 py-0.5 bg-primary/10 border border-primary/30 rounded-sm inline-block uppercase tracking-wider shadow-[0_0_10px_rgba(255,0,189,0.2)]">ACTIVE</div>
+</div>
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors">car_repair</span>
+</div>
+<div class="mt-auto pt-4">
+<div class="text-[12px] text-on-surface-variant mb-2 font-data-label">Target: Grotti Cheetah</div>
+<div class="flex items-center justify-between font-data-label text-[14px]">
+<span class="text-secondary font-bold">¢45,000</span>
+<span class="text-on-surface-variant flex items-center gap-1 text-[12px]"><span class="material-symbols-outlined text-[14px]">schedule</span> 04:12:00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Wanted -->
+<div class="terminal-card rounded-sm flex flex-col group hover:border-[#ff3333]/50 transition-colors h-full">
+<div class="p-6 flex flex-col gap-4 h-full">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-stat-value text-[20px] text-on-surface uppercase mb-1">Wanted List</h3>
+<div class="font-data-label text-[10px] text-[#ff3333] px-2 py-0.5 bg-[#ff3333]/10 border border-[#ff3333]/30 rounded-sm inline-block uppercase tracking-wider shadow-[0_0_10px_rgba(255,51,51,0.2)]">HIGH RISK</div>
+</div>
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-[#ff3333] transition-colors">local_police</span>
+</div>
+<div class="mt-auto pt-4">
+<div class="text-[12px] text-on-surface-variant mb-2 font-data-label">Bounties: 3 remaining</div>
+<div class="flex items-center justify-between font-data-label text-[14px]">
+<span class="text-secondary font-bold">Up to ¢120k</span>
+<button class="text-primary hover:text-white transition-colors uppercase text-[10px] tracking-wider border-b border-primary/30 hover:border-primary pb-0.5">View Targets</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Wiretapper -->
+<div class="terminal-card rounded-sm flex flex-col group hover:border-tertiary/50 transition-colors h-full">
+<div class="p-6 flex flex-col gap-4 h-full">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-stat-value text-[20px] text-on-surface uppercase mb-1">Wiretapper</h3>
+<div class="font-data-label text-[10px] text-tertiary px-2 py-0.5 bg-tertiary/10 border border-tertiary/30 rounded-sm inline-block uppercase tracking-wider shadow-[0_0_10px_rgba(139,0,255,0.2)]">INTEL</div>
+</div>
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-tertiary transition-colors">settings_input_antenna</span>
+</div>
+<div class="mt-auto pt-4">
+<div class="text-[12px] text-on-surface-variant mb-2 font-data-label">Signal Intercept: Downtown</div>
+<div class="flex items-center justify-between font-data-label text-[14px]">
+<span class="text-secondary font-bold">RP +2500</span>
+<div class="w-16 h-1.5 bg-[#1a1a1f] rounded-none overflow-hidden border border-[#333340]">
+<div class="h-full bg-tertiary w-3/4 shadow-[0_0_5px_#8b00ff]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Database Table -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">database</span>
+<h2 class="font-data-label text-[14px] text-primary uppercase tracking-widest">Full Directory</h2>
+<div class="h-px bg-[#333340] flex-grow ml-4"></div>
+<!-- Filters -->
+<div class="flex gap-2 font-data-label text-[12px]">
+<button class="px-3 py-1.5 bg-secondary/10 border border-secondary text-secondary rounded-sm shadow-[0_0_10px_rgba(0,238,252,0.2)] transition-all">All</button>
+<button class="px-3 py-1.5 border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary rounded-sm transition-all">Combat</button>
+<button class="px-3 py-1.5 border border-[#333340] text-on-surface-variant hover:border-primary hover:text-primary rounded-sm transition-all">Racing</button>
+</div>
+</div>
+<div class="terminal-card rounded-sm overflow-hidden p-0">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="font-data-label text-[10px] text-on-surface-variant tracking-widest uppercase border-b border-[#333340] bg-[#1a1a1f]/50 terminal-header">
+<th class="p-4 font-normal">Activity Name</th>
+<th class="p-4 font-normal">Location</th>
+<th class="p-4 font-normal">Rewards</th>
+<th class="p-4 font-normal">Affinity Buff</th>
+<th class="p-4 font-normal text-right">Status</th>
+</tr>
+</thead>
+<tbody class="font-data-label text-[12px]">
+<!-- Entry 1 -->
+<tr class="border-b border-[#333340] hover:bg-primary/5 transition-colors cursor-pointer group relative">
+<td class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(255,0,189,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#0a0a0c] border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:border-primary group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">sports_motorsports</span>
+</div>
+<span class="text-on-surface font-bold">Dirt Biking Trials</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">Vice Point Hills</td>
+<td class="p-4 text-[#00ff88] font-bold">¢500 - ¢2000</td>
+<td class="p-4"><span class="text-primary bg-primary/10 px-2 py-0.5 rounded-sm border border-primary/20 text-[10px] uppercase tracking-wider">Stamina +</span></td>
+<td class="p-4 text-right">
+<span class="material-symbols-outlined text-[#333340] group-hover:text-on-surface-variant transition-colors">lock_open</span>
+</td>
+</tr>
+<!-- Entry 2 -->
+<tr class="border-b border-[#333340] hover:bg-primary/5 transition-colors cursor-pointer group relative">
+<td class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#ff3333] shadow-[0_0_10px_rgba(255,51,51,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#0a0a0c] border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:border-[#ff3333] group-hover:text-[#ff3333] transition-colors">
+<span class="material-symbols-outlined text-sm">cruelty_free</span>
+</div>
+<span class="text-on-surface font-bold">Exotic Poaching</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">Leaf Links / Swamps</td>
+<td class="p-4 text-[#00ff88] font-bold">Varies by pelt</td>
+<td class="p-4"><span class="text-[#ff3333] bg-[#ff3333]/10 px-2 py-0.5 rounded-sm border border-[#ff3333]/20 text-[10px] uppercase tracking-wider">Stealth +</span></td>
+<td class="p-4 text-right">
+<span class="material-symbols-outlined text-[#333340] group-hover:text-on-surface-variant transition-colors">lock_open</span>
+</td>
+</tr>
+<!-- Entry 3 -->
+<tr class="border-b border-[#333340] bg-[#1a1a1f]/30 hover:bg-primary/5 transition-colors cursor-pointer group relative">
+<td class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary shadow-[0_0_10px_rgba(0,238,252,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#0a0a0c] border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:border-secondary group-hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">flag</span>
+</div>
+<span class="text-on-surface font-bold">Street Racing (Tier 1)</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">Ocean Beach</td>
+<td class="p-4 text-[#00ff88] font-bold">¢5,000 + Pink Slip</td>
+<td class="p-4"><span class="text-secondary bg-secondary/10 px-2 py-0.5 rounded-sm border border-secondary/20 text-[10px] uppercase tracking-wider">Driving +</span></td>
+<td class="p-4 text-right">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px] bg-[#333340] px-2 py-1 rounded-sm">deselect</span>
+</td>
+</tr>
+<!-- Entry 4 -->
+<tr class="border-b border-[#333340] hover:bg-primary/5 transition-colors cursor-pointer group relative">
+<td class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary shadow-[0_0_10px_rgba(139,0,255,0.8)] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-[#0a0a0c] border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:border-tertiary group-hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-sm">sports_tennis</span>
+</div>
+<span class="text-on-surface font-bold">Club Tennis</span>
+</div>
+</td>
+<td class="p-4 text-on-surface-variant">Starfish Island</td>
+<td class="p-4 text-secondary">None (Social)</td>
+<td class="p-4"><span class="text-tertiary bg-tertiary/10 px-2 py-0.5 rounded-sm border border-tertiary/20 text-[10px] uppercase tracking-wider">Max Health +</span></td>
+<td class="p-4 text-right">
+<span class="material-symbols-outlined text-[#333340] group-hover:text-on-surface-variant transition-colors">lock_open</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0a0a0c] mt-auto w-full border-t border-[#333340] relative overflow-hidden">
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, #ff00bd 1px, #ff00bd 2px); background-size: 100% 4px;"></div>
+<div class="max-w-[1440px] mx-auto px-4 md:px-8 py-16 relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="space-y-6">
+<h2 class="font-display-2xl text-[32px] text-primary italic tracking-tighter uppercase glitch-text" data-text="GTA STACK">GTA STACK</h2>
+<p class="font-data-label text-[12px] text-on-surface-variant leading-relaxed uppercase tracking-wider">The definitive intelligence hub for the Leonida criminal underworld. Real-time telemetry, weapon specs, and tactical maps.</p>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-primary/30 pb-2 inline-block">Registry</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-primary transition-colors" href="#">Super Cars</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Weaponry</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Tactical Gear</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Property</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-secondary/30 pb-2 inline-block">Resources</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-secondary transition-colors" href="#">API Access</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Map Editor</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Cheat Codes</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Calculators</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-tertiary/30 pb-2 inline-block">Connect</h4>
+<div class="flex gap-4 mb-6">
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#"><span class="material-symbols-outlined text-lg">share</span></a>
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-secondary hover:text-secondary transition-all" href="#"><span class="material-symbols-outlined text-lg">rss_feed</span></a>
+</div>
+<p class="font-data-label text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Status: <span class="text-[#00ff88]">All Systems Operational</span></p>
+</div>
+</div>
+<div class="pt-8 border-t border-[#333340] flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2 font-data-label text-[10px] tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Legal</a>
+</div>
+<p class="font-data-label text-[9px] tracking-widest uppercase text-on-surface-variant/40 text-center md:text-right">
+                © 2026 GTA STACK PROTOCOL // ALL RIGHTS RESERVED. NOT AFFILIATED WITH ROCKSTAR GAMES.
+            </p>
+</div>
+</div>
+</footer>
+</body></html>

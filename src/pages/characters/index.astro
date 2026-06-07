@@ -1,0 +1,189 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/layout/Sidebar.astro';
+
+interface CharacterStat {
+  label: string;
+  value: string;
+  isThreatLevel?: boolean;
+}
+
+interface CharacterCard {
+  id: string;
+  name: string;
+  role: string;
+  status: string;
+  statusClass: string;
+  image: string;
+  bgBlurColor: string;
+  borderColorClass: string;
+  stats: CharacterStat[];
+  biography: string;
+  threatLevel?: number;
+  affinityLevel?: number;
+  gaugeColorClass?: string;
+  glowClass?: string;
+}
+
+const characters: CharacterCard[] = [
+  {
+    id: 'jason',
+    name: 'JASON',
+    role: 'PRIMARY PROTAGONIST',
+    status: 'WANTED',
+    statusClass: 'bg-[#ff3333]/20 text-[#ff3333] border-[#ff3333] shadow-[0_0_10px_rgba(255,51,51,0.5)]',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB26Z8AofmZ7fS9pZ2_t-6F5f5xXW3MhSjL7O08QZ0O05FqMvWwT_H_x46_B4w7x1M7g3i0_w_t50kG60bE0oA7O296Lw4R0QO1D3q2e4I2xG5v0vH6a6D8j9b_3_4V14p1e8f20w1A2X6X4g_5l2l1b7a2d1d0q3d1t1X9e0n2z8m9t0k7',
+    bgBlurColor: 'bg-[#ff3333]/20',
+    borderColorClass: 'group-hover:border-[#ff3333]',
+    glowClass: 'group-hover:drop-shadow-[0_0_10px_rgba(255,51,51,0.5)]',
+    stats: [
+      { label: 'AGE (EST.)', value: 'Late 20s' },
+      { label: 'AFFILIATION', value: 'Independent' },
+      { label: 'LAST SEEN', value: 'Port Gellhorn' }
+    ],
+    threatLevel: 8,
+    gaugeColorClass: '!bg-[#ff3333] shadow-[0_0_5px_#ff3333]',
+    biography: 'Former military or PMC background suspected due to tactical proficiency. Currently operating with Lucia across Leonida. Known to favor assault rifles and heavy vehicles.'
+  },
+  {
+    id: 'lucia',
+    name: 'LUCIA',
+    role: 'PRIMARY PROTAGONIST',
+    status: 'ACTIVE',
+    statusClass: 'bg-primary/20 text-primary border-primary shadow-[0_0_10px_rgba(255,0,189,0.5)]',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFH12g3eX4l4L4c1C3Jq3Hq2m9h3qXp4A9l3d4C0B6q3F9q9q7D4k9R7T7R4C4w1K9D9D9G0V1r1a3X3B8B8D2V2W2B8a9A1f4N9a3x3M0D0A0Z0B2A9Z9M9m0X0H1n9v3T0W2m0t9e4S0j9z8H4d0Z9q2',
+    bgBlurColor: 'bg-primary/20',
+    borderColorClass: 'group-hover:border-primary',
+    glowClass: 'group-hover:drop-shadow-[0_0_10px_rgba(255,0,189,0.5)]',
+    stats: [
+      { label: 'AGE (EST.)', value: 'Mid 20s' },
+      { label: 'AFFILIATION', value: 'Independent' },
+      { label: 'LAST SEEN', value: 'Vice City Metro' }
+    ],
+    threatLevel: 9,
+    gaugeColorClass: 'active-primary',
+    biography: 'Recently released or escaped from Leonida State Prison. Highly adaptable, skilled in stealth and close-quarters combat. Operates primarily with Jason.'
+  },
+  {
+    id: 'stefanie',
+    name: 'STEFANIE',
+    role: 'KEY CONTACT',
+    status: 'UNKNOWN',
+    statusClass: 'bg-secondary/20 text-secondary border-secondary shadow-[0_0_10px_rgba(0,238,252,0.5)]',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0a3f4E2F1B2A1a3D4l4C3x3V2V2D9A9M9B8m0Z0X0e4C4W2T0j9N9H1v3t9S0q2n9z8A1f4D0Z9q2A9Z9M9m0X0H1n9v3T0W2m0t9e4S0j9z8H4d0Z9q2',
+    bgBlurColor: 'bg-secondary/20',
+    borderColorClass: 'group-hover:border-secondary',
+    glowClass: 'group-hover:drop-shadow-[0_0_10px_rgba(0,238,252,0.5)]',
+    stats: [
+      { label: 'AGE (EST.)', value: 'Classified' },
+      { label: 'AFFILIATION', value: 'Vice City Underground' },
+      { label: 'LAST SEEN', value: 'Ocean Beach' }
+    ],
+    affinityLevel: 4,
+    gaugeColorClass: 'active-secondary',
+    biography: 'Information broker operating out of Vice City. Provides critical intel and high-value contracts. Approach with caution; known to play multiple sides.'
+  }
+];
+---
+
+<Layout title="Personnel Dossiers | GTA STACK">
+
+  <div class="flex flex-1 overflow-hidden">
+    <Sidebar />
+
+    <main class="flex-1 overflow-y-auto" role="main">
+      <div class="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-8 relative z-10">
+        
+        <!-- Header Section -->
+        <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="material-symbols-outlined text-primary text-3xl drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]">groups</span>
+              <h2 class="font-headline-lg text-[32px] md:text-[40px] text-on-surface uppercase tracking-tight glitch-text" data-text="PERSONNEL DOSSIERS">PERSONNEL DOSSIERS</h2>
+            </div>
+            <p class="font-data-label text-[12px] text-on-surface-variant max-w-2xl leading-relaxed">Classified intelligence profiles on key individuals operating within the Leonida sector. Data compiled from LCPD, FIB, and verified underground sources.</p>
+          </div>
+          
+          <!-- Filters -->
+          <div class="flex gap-2">
+            <button class="bg-primary/10 border border-primary text-primary font-data-label text-[10px] px-4 py-2 rounded-sm shadow-[0_0_10px_rgba(255,0,189,0.2)] uppercase tracking-widest transition-colors">
+              PROTAGONISTS
+            </button>
+            <button class="bg-[#1a1a1f]/50 border border-[#333340] text-on-surface-variant hover:border-secondary hover:text-secondary font-data-label text-[10px] px-4 py-2 rounded-sm transition-all uppercase tracking-widest">
+              CONTACTS
+            </button>
+            <button class="bg-[#1a1a1f]/50 border border-[#333340] text-on-surface-variant hover:border-[#ff3333] hover:text-[#ff3333] font-data-label text-[10px] px-4 py-2 rounded-sm transition-all uppercase tracking-widest">
+              ANTAGONISTS
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          {characters.map(char => (
+            <div class={`terminal-card rounded-sm overflow-hidden flex flex-col group relative transition-colors ${char.borderColorClass} bg-surface-container/50`}>
+              <!-- Background Blur Effect -->
+              <div class={`absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 blur-[60px] opacity-30 group-hover:opacity-60 transition-opacity z-0 pointer-events-none ${char.bgBlurColor}`}></div>
+              
+              <!-- Character Image Header -->
+              <div class="relative h-64 overflow-hidden border-b border-[#333340] z-10 flex items-center justify-center bg-black">
+                <img alt={char.name} class="w-full h-full object-cover object-center filter grayscale group-hover:grayscale-0 contrast-125 transition-all duration-700 opacity-80 group-hover:opacity-100 group-hover:scale-105" src={char.image}/>
+                
+                <!-- Status Tag -->
+                <div class="absolute top-4 right-4">
+                  <span class={`border px-2 py-1 font-data-label text-[10px] font-bold uppercase tracking-widest rounded-sm backdrop-blur-sm ${char.statusClass}`}>{char.status}</span>
+                </div>
+                
+                <!-- Name Overlay -->
+                <div class="absolute bottom-4 left-4">
+                  <p class="font-data-label text-[10px] text-white/70 uppercase tracking-widest mb-1">{char.role}</p>
+                  <h3 class={`font-headline-lg text-[32px] text-white uppercase leading-none ${char.glowClass} transition-all`}>{char.name}</h3>
+                </div>
+              </div>
+              
+              <!-- Content Body -->
+              <div class="p-6 flex-1 flex flex-col relative z-10">
+                <div class="space-y-4 mb-6">
+                  {char.stats.map(stat => (
+                    <div class="flex justify-between items-center border-b border-[#333340]/50 pb-2">
+                      <span class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">{stat.label}</span>
+                      <span class="font-data-label text-[12px] text-white">{stat.value}</span>
+                    </div>
+                  ))}
+                  
+                  <!-- Threat/Affinity Gauge -->
+                  <div class="pt-2">
+                    <div class="flex justify-between font-data-label text-[10px] mb-2 text-on-surface-variant uppercase tracking-widest">
+                      <span>{char.threatLevel !== undefined ? 'THREAT LEVEL' : 'AFFINITY'}</span>
+                      <span class="text-white">{char.threatLevel !== undefined ? char.threatLevel : char.affinityLevel}/10</span>
+                    </div>
+                    <div class="hud-gauge">
+                      {Array.from({length: 10}).map((_, i) => {
+                        const level = char.threatLevel !== undefined ? char.threatLevel : char.affinityLevel!;
+                        return (
+                          <div class={`hud-gauge-segment ${i < level ? char.gaugeColorClass : ''}`}></div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                
+                <p class="font-data-label text-[12px] text-on-surface-variant leading-relaxed mt-auto border-t border-[#333340] pt-4">
+                  {char.biography}
+                </p>
+                
+                <div class="mt-6 flex justify-end">
+                   <button class={`text-on-surface-variant transition-colors font-data-label text-[10px] uppercase tracking-widest flex items-center gap-1 group/btn ${char.borderColorClass.replace('border-', 'text-').replace('hover:', 'hover:')}`}>
+                      VIEW FULL DOSSIER <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>

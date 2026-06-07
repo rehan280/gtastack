@@ -1,0 +1,660 @@
+<!DOCTYPE html><html class="dark" lang="en"><head></head><body class="font-body-md antialiased min-h-screen flex flex-col relative text-on-surface bg-background">```html
+
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GTA STACK - The Complete Grand Theft Auto VI Wiki &amp; Resource</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+            "primary": "#ff00bd",
+            "secondary": "#00eefc",
+            "tertiary": "#8b00ff",
+            "background": "#0a0a0c",
+            "surface": "#121215",
+            "surface-container": "#1a1a1f",
+            "surface-container-high": "#23232a",
+            "on-surface": "#f0f0f5",
+            "on-surface-variant": "#a0a0b0",
+            "outline": "#333340",
+            "secondary-container": "#00eefc",
+            "surface-variant": "#333340"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "margin-mobile": "16px",
+                "stack-lg": "48px",
+                "gutter": "24px",
+                "base": "8px",
+                "stack-sm": "12px",
+                "stack-md": "24px",
+                "container-max": "1280px"
+        },
+        "fontFamily": {
+                "data-label": [
+                        "JetBrains Mono"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "stat-value": [
+                        "Inter"
+                ],
+                "headline-lg-mobile": [
+                        "Inter"
+                ],
+                "display-2xl": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Hanken Grotesk"
+                ]
+        },
+        "fontSize": {
+                "data-label": [
+                        "14px",
+                        {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg": [
+                        "40px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "stat-value": [
+                        "24px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "800"
+                        }
+                ],
+                "display-2xl": [
+                        "72px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.04em",
+                                "fontWeight": "900"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        /* Vice Protocol Aesthetic Styles */
+        body {
+            background-color: #0a0a0c;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 0, 189, 0.05), transparent 40%), 
+                radial-gradient(circle at 85% 30%, rgba(0, 238, 252, 0.05), transparent 40%),
+                linear-gradient(rgba(255,0,189,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,0,189,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            background-attachment: fixed;
+            color: #f0f0f5;
+            overflow-x: hidden;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 83px, 0); }
+            5% { clip: rect(61px, 9999px, 13px, 0); }
+            10% { clip: rect(50px, 9999px, 20px, 0); }
+            15% { clip: rect(11px, 9999px, 60px, 0); }
+            20% { clip: rect(31px, 9999px, 15px, 0); }
+            25% { clip: rect(78px, 9999px, 98px, 0); }
+            30% { clip: rect(96px, 9999px, 2px, 0); }
+            35% { clip: rect(64px, 9999px, 47px, 0); }
+            40% { clip: rect(89px, 9999px, 18px, 0); }
+            45% { clip: rect(56px, 9999px, 86px, 0); }
+            50% { clip: rect(3px, 9999px, 32px, 0); }
+            55% { clip: rect(38px, 9999px, 88px, 0); }
+            60% { clip: rect(15px, 9999px, 91px, 0); }
+            65% { clip: rect(69px, 9999px, 44px, 0); }
+            70% { clip: rect(4px, 9999px, 22px, 0); }
+            75% { clip: rect(99px, 9999px, 79px, 0); }
+            80% { clip: rect(48px, 9999px, 5px, 0); }
+            85% { clip: rect(25px, 9999px, 73px, 0); }
+            90% { clip: rect(82px, 9999px, 61px, 0); }
+            95% { clip: rect(34px, 9999px, 41px, 0); }
+            100% { clip: rect(19px, 9999px, 58px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+
+        .terminal-card {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 189, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 189, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff00bd, transparent);
+            opacity: 0.5;
+        }
+
+        .terminal-card:hover {
+            border-color: rgba(255, 0, 189, 0.8);
+            box-shadow: 0 0 30px rgba(255, 0, 189, 0.2), inset 0 0 20px rgba(255, 0, 189, 0.1);
+        }
+        
+        .terminal-header {
+            border-bottom: 1px solid rgba(51, 51, 64, 0.8);
+            background: rgba(26, 26, 31, 0.5);
+        }
+
+        .hud-gauge {
+            display: flex;
+            gap: 1px;
+            height: 4px;
+            transform: skewX(-15deg);
+        }
+        .hud-gauge-segment {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border-radius: 0;
+        }
+        .hud-gauge-segment.active-primary {
+            background: #ff00bd;
+            box-shadow: 0 0 4px #ff00bd, 0 0 10px rgba(255,0,189,0.5);
+        }
+        .hud-gauge-segment.active-secondary {
+            background: #00eefc;
+            box-shadow: 0 0 4px #00eefc, 0 0 10px rgba(0,238,252,0.5);
+        }
+
+        .input-neon {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333340;
+            transition: all 0.3s;
+        }
+        .input-neon:focus {
+            border-color: #ff00bd;
+            box-shadow: 0 0 15px rgba(255,0,189,0.3);
+            outline: none;
+        }
+
+        /* Custom Scrollbar for sleekness */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333340;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00bd;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        
+    </style>
+<div class="scanlines"></div>
+<!-- TopNavBar -->
+<header class="bg-[#0a0a0c]/80 backdrop-blur-xl top-0 sticky border-b border-[#333340] z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2" href="/">
+<h1 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text" data-text="GTA STACK">GTA STACK</h1>
+<div class="hidden lg:flex flex-col ml-4">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest leading-none mb-1 opacity-80">&gt; SYS.COUNTDOWN:</span>
+<span class="font-data-label text-[12px] text-primary font-bold leading-none tracking-wider">166D:04H:31M <span class="text-secondary-container ml-2 text-[10px] uppercase border border-secondary-container/30 px-1 py-0.5 rounded-sm">Out Now</span></span>
+</div>
+</a>
+</div>
+<nav class="hidden lg:flex items-center gap-1">
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Vehicles</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Weapons</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Characters</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Regions</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Activities</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Rumors</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Games</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<a class="hidden md:flex text-secondary-container hover:text-primary font-data-label text-[12px] font-semibold transition-colors border border-secondary-container/30 px-3 py-1.5 rounded-sm uppercase tracking-wide" href="#">Sign in</a>
+<button class="lg:hidden text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full relative z-10">
+<!-- Hero Section -->
+<section class="relative min-h-[500px] flex flex-col justify-center overflow-hidden border-b border-primary/20 bg-transparent">
+<!-- Background Image Layer -->
+<div class="absolute inset-0 z-0 opacity-30">
+<img alt="GTA 6 Hero Background" class="w-full h-full object-cover filter contrast-125 saturate-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0pOAkM0jjC02xtyTqtmymqb6ENmYmXc-ziq76OXJiOqijDdEUokzus0GDUUIGOKrje03j6pvuz6jo6a7tW6VuxOBzq4TE-UlQOmG3KFQr7GDP8ipfJ7TjTTZfBgshqyFYXYAMu_SGbhy-F4zCz7IofQTddwYWeSHGhF7X2rToitEt18AvOpSNKblFLrRCf12dKNAhyFySZrdKgWPpNmRJapoqupkCwAU66IFQ85fyvN8F4Do9ctQgWbyQfxZjFuj5itzYU8FnUCE">
+<div class="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background"></div>
+</div>
+<div class="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl mx-auto text-center px-4 py-16 h-full">
+<div class="font-data-label text-secondary-container text-xs tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,189,0.8)]"></span>
+System Status: Online / ETA Calculated
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-[32px] md:text-[56px] text-white font-black leading-tight mb-8 drop-shadow-xl uppercase tracking-tight">
+    Grand Theft Auto <span class="text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)]">VI</span> releases on <br><span class="text-secondary-container font-data-label text-[24px] md:text-[40px] tracking-widest drop-shadow-[0_0_10px_rgba(0,238,252,0.8)]">November 19, 2026</span>
+</h1>
+<div class="flex flex-wrap justify-center gap-3 md:gap-8 mb-8 relative border border-primary/30 p-6 bg-[#1a1a1f]/70 backdrop-blur-md rounded-sm">
+<div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary"></div>
+<div class="flex flex-col items-center justify-center min-w-[80px] md:min-w-[100px]">
+<div class="font-data-label text-[40px] md:text-[64px] font-bold leading-none mb-1 text-secondary-container drop-shadow-[0_0_15px_rgba(0,238,252,0.6)]">166</div>
+<div class="font-data-label text-[12px] text-primary uppercase tracking-[0.2em] font-semibold">Days</div>
+</div>
+<div class="font-data-label text-[40px] md:text-[64px] font-bold text-[#333340] self-start mt-2">:</div>
+<div class="flex flex-col items-center justify-center min-w-[80px] md:min-w-[100px]">
+<div class="font-data-label text-[40px] md:text-[64px] font-bold leading-none mb-1 text-primary drop-shadow-[0_0_15px_rgba(255,0,189,0.6)]">04</div>
+<div class="font-data-label text-[12px] text-secondary-container uppercase tracking-[0.2em] font-semibold">Hours</div>
+</div>
+<div class="font-data-label text-[40px] md:text-[64px] font-bold text-[#333340] self-start mt-2">:</div>
+<div class="flex flex-col items-center justify-center min-w-[80px] md:min-w-[100px]">
+<div class="font-data-label text-[40px] md:text-[64px] font-bold leading-none mb-1 text-primary drop-shadow-[0_0_15px_rgba(255,0,189,0.6)]">31</div>
+<div class="font-data-label text-[12px] text-secondary-container uppercase tracking-[0.2em] font-semibold">Mins</div>
+</div>
+<div class="font-data-label text-[40px] md:text-[64px] font-bold text-[#333340] self-start mt-2">:</div>
+<div class="flex flex-col items-center justify-center min-w-[80px] md:min-w-[100px]">
+<div class="font-data-label text-[40px] md:text-[64px] font-bold leading-none mb-1 text-primary drop-shadow-[0_0_15px_rgba(255,0,189,0.6)]">06</div>
+<div class="font-data-label text-[12px] text-secondary-container uppercase tracking-[0.2em] font-semibold">Secs</div>
+</div>
+</div>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary font-data-label text-[14px] uppercase tracking-wider px-8 py-3 rounded-sm transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(255,0,189,0.4)]">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span> Init Sync <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</section>
+<!-- Main Content Bento Grid -->
+<div class="max-w-[1440px] mx-auto px-4 md:px-8 py-12 bento-grid">
+<!-- Featured Section (Span 8) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<div class="terminal-card rounded-sm flex flex-col h-full">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">&gt; INTEL_FEED.FEATURED</span>
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,189,0.8)]"></span>
+</div>
+<div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Featured Main -->
+<a class="relative group rounded-sm overflow-hidden md:col-span-2 md:h-[400px] block border border-[#333340] hover:border-primary transition-colors" href="#">
+<img alt="GTA 6 All Safehouses" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVU1q5GEJWhyXkpwLle1wvU9KvHlm1FJS6DRJlCrmpAvAcqoIG7t_iOBa98Oqvc6V6O3m4tJyGF_b4hrOOTI7lRhC1xu4xGa-xnMPfPRJyZd2IU0R0Q9lTO-0rFouR6c2SWefbL-nQF-Os2BAOTugx3_Bek1gHjm5lPX1mNmbHTh367LyzSE2aW9rvSZUwTEmHy3k-McY5pkgb2aaeHoTjaaao0M-eToYhMnB6MFHtthZO37oiVS6UOUlDyVyQPnDaD2zuVeYzkMk">
+<div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<span class="bg-primary/20 text-primary border border-primary/50 font-data-label text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm mb-3 inline-block backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,189,0.3)]">Featured_File</span>
+<h2 class="font-stat-value text-[24px] md:text-[32px] text-white font-bold leading-tight mb-2 group-hover:text-primary transition-colors drop-shadow-md">GTA 6 All Safehouses</h2>
+<p class="font-body-md text-on-surface-variant text-[14px] md:text-[16px] line-clamp-2 max-w-2xl">There are bound to be a number of safehouses in GTA 6, and while it's too early to tell definitively which buildings and locations will…</p>
+<div class="flex items-center gap-2 mt-4 font-data-label text-[12px]">
+<span class="text-secondary-container">KF.Ferreira</span>
+<span class="text-[#333340]">|</span>
+<span class="text-on-surface-variant">05.29.2026</span>
+</div>
+</div>
+</a>
+<!-- Secondary Cards -->
+<a class="relative group rounded-sm overflow-hidden h-[200px] block border border-[#333340] hover:border-secondary transition-colors" href="#">
+<img alt="GTA 6 Character Customization" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX2q2xTO9vRdAj6uevg5r3DnHoZabT2B4IritqH51lM_5k29gi--vkCGG7fCHZ6a_B1X3U6wJ98vzoEFiY39gRnYV-1RkLeoTrUXUWHFT648QCQqv4IFsY3Zzx0J3aSkocWJjTOqKizWAEZJZP8A-e2ySNPLCfqfX-7-sjd74f7yH3ZxOORYHkzKWJJiQYQoelTiiKMkOHiQ8ivyz7QhxhsFgMceCgDe48ZDrLoMtdDEv2wubvK7i7Fnl7-ryoPBU0ZoSRrkupTUw">
+<div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<span class="text-secondary-container font-data-label text-[10px] uppercase tracking-wider mb-1 inline-block">[GUIDES]</span>
+<h3 class="font-stat-value text-[16px] text-white font-bold leading-tight group-hover:text-secondary-container transition-colors">GTA 6 Character Customization - Everything We Know So Far</h3>
+</div>
+</a>
+<a class="relative group rounded-sm overflow-hidden h-[200px] block border border-[#333340] hover:border-secondary transition-colors" href="#">
+<img alt="GTA 6 Weather System" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApGKBjtVBJTtWrYkHMb6MxnWo_FrwV65qFWrFzpBP4A3BL6f7Bstz4V3rfFVmFJMBQ1DmdmcLGpwfvMVVg6DCnu_eAvXsNh8PYw0hkG9FR4JzWan35aqfi-KU5977zNvn5KK94SPspViavQ1bbk4QsyLOsj6kyq-5I7_P33-YjE6dfmkO6EoS8Rd4ME04LixUFTiGZmCZ_VZlped1BBzhvUmax7EyVQOK4CccxVNXtmuFwVUDWRtlYxOH0Tt_M47sGIFmX0CRO3D8">
+<div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4 w-full">
+<span class="text-secondary-container font-data-label text-[10px] uppercase tracking-wider mb-1 inline-block">[GUIDES]</span>
+<h3 class="font-stat-value text-[16px] text-white font-bold leading-tight group-hover:text-secondary-container transition-colors">GTA 6 Weather System Explained - Confirmed and Rumored Weather Events</h3>
+</div>
+</a>
+</div>
+</div>
+</div>
+<!-- Sidebar News (Span 4) -->
+<aside class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="terminal-card rounded-sm flex flex-col h-full">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-primary uppercase tracking-widest">&gt; LATEST_COMMUNIQUES</span>
+</div>
+<div class="p-4 flex flex-col gap-6">
+<!-- News Item 1 -->
+<article class="group border-l-2 border-[#333340] hover:border-secondary-container pl-3 transition-colors">
+<div class="flex flex-col mb-1">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-wider">A.Hashmi // 06.04.26</span>
+</div>
+<h3 class="font-stat-value text-[16px] font-bold text-white mb-2 group-hover:text-secondary-container transition-colors"><a href="#" class="">Devolver Digital Is the Only Publisher Not Afraid of GTA 6's Release Date</a></h3>
+<p class="font-body-md text-[14px] text-on-surface-variant line-clamp-2 mb-2">As of writing, November 19, 2026, remains the release date for GTA 6, and Take-Two Interactive's CEO, Strauss Zelnick, continues to reassure…</p>
+</article>
+<!-- News Item 2 -->
+<article class="group border-l-2 border-[#333340] hover:border-primary pl-3 transition-colors">
+<div class="flex flex-col mb-1">
+<span class="font-data-label text-[10px] text-primary uppercase tracking-wider">P.Luu // 06.04.26</span>
+</div>
+<h3 class="font-stat-value text-[16px] font-bold text-white mb-2 group-hover:text-primary transition-colors"><a href="#" class="">Those GTA 6 Best Buy pre-order leaks? Zelnick shut them down</a></h3>
+<div class="bg-[#0a0a0c]/50 p-2 border border-[#333340] mb-2 font-data-label text-[10px] text-secondary-container">
+            &gt; [Destructoid] — GTA 6 is not being delayed to 2027
+            </div>
+</article>
+<!-- News Item 3 -->
+<article class="group border-l-2 border-[#333340] hover:border-primary pl-3 transition-colors">
+<div class="flex flex-col mb-1">
+<span class="font-data-label text-[10px] text-primary uppercase tracking-wider">P.Luu // 06.04.26</span>
+</div>
+<h3 class="font-stat-value text-[16px] font-bold text-white mb-2 group-hover:text-primary transition-colors"><a href="#" class="">GTA 6's $1.5 billion budget is the moat no other studio can cross</a></h3>
+</article>
+<a class="font-data-label text-[12px] text-secondary-container hover:text-white hover:bg-secondary-container/10 flex items-center justify-center gap-1 mt-auto transition-colors uppercase w-full py-3 border border-secondary-container/30 rounded-sm tracking-widest" href="#">Access full archive <span class="material-symbols-outlined text-[14px]">chevron_right</span></a>
+</div>
+</div>
+</aside>
+<!-- DB Updates / Recently Updated (Span 12) -->
+<div class="col-span-12">
+<div class="terminal-card rounded-sm">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">&gt; DB_UPDATES.RECENT</span>
+<div class="flex gap-2">
+<button class="text-[10px] font-data-label text-on-surface-variant hover:text-primary uppercase tracking-wider">[Vehicles]</button>
+<button class="text-[10px] font-data-label text-on-surface-variant hover:text-primary uppercase tracking-wider">[Weapons]</button>
+<button class="text-[10px] font-data-label text-on-surface-variant hover:text-primary uppercase tracking-wider">[Regions]</button>
+</div>
+</div>
+<div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-primary rounded-sm overflow-hidden group transition-colors flex flex-col h-full relative" href="#">
+<div class="absolute top-0 right-0 p-1 z-10"><span class="bg-primary text-black font-data-label text-[8px] px-1 uppercase font-bold shadow-[0_0_8px_rgba(255,0,189,0.5)]">Veh</span></div>
+<div class="h-24 overflow-hidden border-b border-[#333340]">
+<img alt="Liberty City Cycles Avarus" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWclKx_MiLfeXI5zDfSm6HMtJOTfKnZHA-B8W3SK4UkUZ2cGmycjKjmamD7IMEVWnnuBVdUu4qq1IzTIKLdpRu1YkYrr23tH36m4j0U_BXA0if5LYpGrSZ0FNoBKPJ7iTVBf4Zv7Xbm20CVmXnYZSlj5rpQDCyBC_JR1a-i1MEprDDhDgbdJzDnWp9zmkTkTZlJXDI9wauLa46xmm9H3r6S35A6XqwFL1XOZTltgbQzblD4iPWkj9KRnTIZknmsCj--SBw28IrftM">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-center bg-[#1a1a1f]/30">
+<h4 class="font-data-label text-[12px] font-bold text-white group-hover:text-primary transition-colors text-center">Liberty City Cycles Avarus</h4>
+</div>
+</a>
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-secondary-container rounded-sm overflow-hidden group transition-colors flex flex-col h-full relative" href="#">
+<div class="absolute top-0 right-0 p-1 z-10"><span class="bg-secondary-container text-black font-data-label text-[8px] px-1 uppercase font-bold shadow-[0_0_8px_rgba(0,238,252,0.5)]">Reg</span></div>
+<div class="h-24 overflow-hidden border-b border-[#333340]">
+<img alt="Leonida State" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUnflZCdmiPmgywY5dkUBtJ1b99sRc6vVg_mNbdgaIErsKgNjWcH5sn2DjKxnETicc12JEh_TVrOm8PyU0xTRqoFAEk7h46OPY4bI9ePy46VSx1uE8n6KFR6gsydc11OroXJy-aFbTxuUAck5Q1y74b-m9SZNHhKQmpaVJ480Yfk_sxIa_OUoHyMYPe3MwGg_O7DuRZGyWTpRDYR-LqOgBuT5tFiR2rEmGHLUjVuZ9sDTEbOtDgfp5UmczqjFRUrH3xG9cp7YRji4">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-center bg-[#1a1a1f]/30">
+<h4 class="font-data-label text-[12px] font-bold text-white group-hover:text-secondary-container transition-colors text-center">Leonida State</h4>
+</div>
+</a>
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-secondary-container rounded-sm overflow-hidden group transition-colors flex flex-col h-full relative" href="#">
+<div class="absolute top-0 right-0 p-1 z-10"><span class="bg-secondary-container text-black font-data-label text-[8px] px-1 uppercase font-bold shadow-[0_0_8px_rgba(0,238,252,0.5)]">Act</span></div>
+<div class="h-24 overflow-hidden border-b border-[#333340]">
+<img alt="Dirt Biking" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrZJbls-_qd7gsoaKCsfl9Bzmwnuf1L3vZWp69izlUqRPpcon1E78u-XBfFWPsIJLbHcvuVFxd6C769Kf_njUaaNClovfyMTjzpKUWRo8j5jtkLL9nz2zZSBppZ1avmWE_lj5PAulD__vF8bghW2NWUCsfFuuZhB5o5lyhACwQuX6Usz9xaNzQQQtmgkVhsVJ_OdF3e4POr4GcW2FnfAAR9hkPFNBUNz7A_7n5n3hCMNWoTg_JP16L0agqRaraXlgkf-vhcC4al1w">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-center bg-[#1a1a1f]/30">
+<h4 class="font-data-label text-[12px] font-bold text-white group-hover:text-secondary-container transition-colors text-center">Dirt Biking</h4>
+</div>
+</a>
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-primary rounded-sm overflow-hidden group transition-colors flex flex-col h-full relative" href="#">
+<div class="absolute top-0 right-0 p-1 z-10"><span class="bg-primary text-black font-data-label text-[8px] px-1 uppercase font-bold shadow-[0_0_8px_rgba(255,0,189,0.5)]">Wpn</span></div>
+<div class="h-24 overflow-hidden border-b border-[#333340]">
+<img alt="SMG GTA VI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjO0fEpMZcAlaogjGh0dRLX3C9m6WO1ulba-usFaUi-84mbstsasjY7GhPJdQUAuZj_BltlJ4u72R2tpcJqeXZGv7GJVMe8fYexTLWtkSJVuNqSqG3B7ElefIlmvItcUw3bcL8UmItMQkqUJzQmadW1XtFsZaqfj8czk4nudylkncywsLt_gdA1qk7dmYu3T_gRHS-DDkFkwWJOWl8fiVs1inRVBNWe4cbe7kPxHDsLI0lmjRiGRh3a6PAs8-96cag5V0RhXwsQQI">
+</div>
+<div class="p-3 flex-1 flex flex-col justify-center bg-[#1a1a1f]/30">
+<h4 class="font-data-label text-[12px] font-bold text-white group-hover:text-primary transition-colors text-center">SMG GTA VI</h4>
+</div>
+</a>
+</div>
+</div>
+</div>
+<!-- Daily Modules & Rumors (Span 12, Sub-grid) -->
+<div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Daily Games -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-tertiary uppercase tracking-widest">&gt; DAILY_SIMULATIONS</span>
+<span class="font-data-label text-[10px] text-on-surface-variant">RESET: 00:00 UTC</span>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-primary p-4 rounded-sm group transition-colors flex items-center justify-between" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:text-primary group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<div>
+<h3 class="font-data-label text-[14px] font-bold text-white group-hover:text-primary uppercase tracking-wider mb-1">Chop Shop</h3>
+<p class="font-body-md text-[12px] text-on-surface-variant">Guess today's mystery vehicle.</p>
+</div>
+</div>
+<span class="font-data-label text-[10px] text-[#333340] group-hover:text-primary">&gt; RUN</span>
+</a>
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-secondary-container p-4 rounded-sm group transition-colors flex items-center justify-between" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:text-secondary-container group-hover:border-secondary-container transition-colors">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<h3 class="font-data-label text-[14px] font-bold text-white group-hover:text-secondary-container uppercase tracking-wider mb-1">Wanted</h3>
+<p class="font-body-md text-[12px] text-on-surface-variant">Identify the wanted character.</p>
+</div>
+</div>
+<span class="font-data-label text-[10px] text-[#333340] group-hover:text-secondary-container">&gt; RUN</span>
+</a>
+<a class="bg-[#0a0a0c]/50 border border-[#333340] hover:border-tertiary p-4 rounded-sm group transition-colors flex items-center justify-between" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:text-tertiary group-hover:border-tertiary transition-colors">
+<span class="material-symbols-outlined">record_voice_over</span>
+</div>
+<div>
+<h3 class="font-data-label text-[14px] font-bold text-white group-hover:text-tertiary uppercase tracking-wider mb-1">Wiretapper</h3>
+<p class="font-body-md text-[12px] text-on-surface-variant">Fill in the missing line.</p>
+</div>
+</div>
+<span class="font-data-label text-[10px] text-[#333340] group-hover:text-tertiary">&gt; RUN</span>
+</a>
+</div>
+</div>
+<!-- Rumor Mill -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-yellow-500 uppercase tracking-widest">&gt; INTERCEPTED_RUMORS</span>
+<span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.8)]"></span>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<!-- Rumor 1 -->
+<div class="bg-[#0a0a0c]/50 border border-[#333340] rounded-sm overflow-hidden flex hover:border-yellow-500/50 transition-colors">
+<div class="w-1/3 relative border-r border-[#333340]">
+<img alt="Trailer 3" class="w-full h-full object-cover opacity-60 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADm6H38CDaF-zuEXOGWmA56lcDyExkJJwBKeLY2nUEjGWw_rqbnogUglqI92LjzCW27Hm5bM6iUeiDVCY79DeltpXq-6wT576AxJZmVqDvsJERtW5nrdfYnjMzpFj0B9EvFeXGeskxcFSRumsYE7WbD-8J_lYClrebQShZj1VO9V50rgPHl4hqk8yOm6WqmHzATeH1ETEYkuKgC351fbRUO1FMH6lUB0yvZDY7zupxqEUPnD9jvjGUEItt0WAvo66SBDU_I4mwrGU">
+<div class="absolute inset-0 bg-yellow-500/10 mix-blend-overlay"></div>
+</div>
+<div class="w-2/3 p-3 flex flex-col">
+<span class="text-yellow-500 font-data-label text-[8px] uppercase tracking-wider mb-1">[UNVERIFIED]</span>
+</div></div></div></div></div></div></main>
+
+<footer class="bg-[#0a0a0c] border-t border-primary/30 pt-16 pb-8 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5 pointer-events-none">
+    <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(255,0,189,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,189,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+  </div>
+  <div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+      <div class="lg:col-span-4">
+        <h2 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text mb-6" data-text="GTA STACK">GTA STACK</h2>
+        <p class="font-body-md text-on-surface-variant text-[14px] leading-relaxed mb-6">
+          GTA STACK is the ultimate intelligence hub for Grand Theft Auto VI. We provide real-time data tracking, comprehensive map analysis, and verified leaks for the next generation of open-world gaming. Our mission is to document every corner of Leonida with surgical precision.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Join our Discord" class="w-10 h-10 border border-secondary-container/30 flex items-center justify-center text-secondary-container hover:bg-secondary-container/10 transition-all">
+            <span class="material-symbols-outlined">group</span>
+          </a>
+          <a href="#" aria-label="Follow us on X" class="w-10 h-10 border border-secondary-container/30 flex items-center justify-center text-secondary-container hover:bg-secondary-container/10 transition-all">
+            <span class="material-symbols-outlined">close</span>
+          </a>
+          <a href="#" aria-label="Subscribe on YouTube" class="w-10 h-10 border border-secondary-container/30 flex items-center justify-center text-secondary-container hover:bg-secondary-container/10 transition-all">
+            <span class="material-symbols-outlined">play_circle</span>
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div>
+          <h4 class="font-data-label text-primary text-[12px] uppercase tracking-widest mb-6">Database</h4>
+          <ul class="flex flex-col gap-3">
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Vehicles</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Weapons</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Characters</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Properties</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-data-label text-primary text-[12px] uppercase tracking-widest mb-6">Intel</h4>
+          <ul class="flex flex-col gap-3">
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Map Analysis</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Rumor Mill</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Trailer Breakdowns</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Guides</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-data-label text-primary text-[12px] uppercase tracking-widest mb-6">Community</h4>
+          <ul class="flex flex-col gap-3">
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Forums</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Discord</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Fan Art</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-data-label text-primary text-[12px] uppercase tracking-widest mb-6">Legal</h4>
+          <ul class="flex flex-col gap-3">
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Privacy Policy</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Terms of Service</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Cookie Policy</a></li>
+            <li class=""><a href="#" class="text-on-surface-variant hover:text-secondary-container text-[14px] transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="terminal-card p-8 mb-12 border-secondary-container/20">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="max-w-md">
+          <h3 class="font-stat-value text-white text-[20px] mb-2 uppercase tracking-wide">Secure Intel Newsletter</h3>
+          <p class="font-body-md text-on-surface-variant text-[14px]">Receive encrypted updates on GTA VI development and community discoveries directly to your terminal.</p>
+        </div>
+        <div class="w-full md:w-auto flex flex-col sm:flex-row gap-2">
+          <input type="email" placeholder="USER@PROTOCOL.INTEL" aria-label="Email for newsletter" class="input-neon bg-black/50 text-secondary-container font-data-label px-4 py-3 w-full md:w-64 border border-secondary-container/30 focus:border-secondary-container">
+          <button class="bg-secondary-container text-black font-data-label font-bold uppercase tracking-widest px-8 py-3 hover:bg-white transition-colors shadow-[0_0_15px_rgba(0,238,252,0.4)]">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#333340] gap-4">
+      <span class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">© 2026 GTA STACK PROTOCOL // ALL RIGHTS RESERVED</span>
+      <div class="sr-only">
+        GTA 6 Wiki, Grand Theft Auto VI Database, Leonida Map, GTA 6 Release Date, GTA 6 Leaks, Vice City 2, Rockstar Games Intel.
+      </div>
+      <div class="flex gap-6">
+        <span class="font-data-label text-[10px] text-primary uppercase tracking-widest">Status: Operational</span>
+        <span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">Region: Leonida</span>
+      </div>
+    </div>
+  </div>
+</footer></body></html>

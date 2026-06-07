@@ -1,0 +1,56 @@
+---
+interface DailyModule {
+    title: string;
+    description: string;
+    icon: string;
+    colorClass: "primary" | "secondary-container" | "tertiary";
+    link: string;
+}
+
+const modules: DailyModule[] = [
+    {
+        title: "Chop Shop",
+        description: "Guess today's mystery vehicle.",
+        icon: "directions_car",
+        colorClass: "primary",
+        link: "/activities"
+    },
+    {
+        title: "Wanted",
+        description: "Identify the wanted character.",
+        icon: "person",
+        colorClass: "secondary-container",
+        link: "/activities"
+    },
+    {
+        title: "Wiretapper",
+        description: "Fill in the missing line.",
+        icon: "record_voice_over",
+        colorClass: "tertiary",
+        link: "/activities"
+    }
+];
+---
+
+<div class="terminal-card rounded-sm flex flex-col h-full">
+    <div class="terminal-header px-4 py-2 flex items-center justify-between">
+        <span class="font-data-label text-[10px] text-tertiary uppercase tracking-widest">&gt; DAILY_SIMULATIONS</span>
+        <span class="font-data-label text-[10px] text-on-surface-variant">RESET: 00:00 UTC</span>
+    </div>
+    <div class="p-4 flex flex-col gap-4">
+        {modules.map((mod) => (
+            <a class={`bg-[#0a0a0c]/50 border border-[#333340] hover:border-${mod.colorClass} p-4 rounded-sm group transition-colors flex items-center justify-between`} href={mod.link}>
+                <div class="flex items-center gap-4">
+                    <div class={`w-10 h-10 border border-[#333340] flex items-center justify-center text-on-surface-variant group-hover:text-${mod.colorClass} group-hover:border-${mod.colorClass} transition-colors`}>
+                        <span class="material-symbols-outlined">{mod.icon}</span>
+                    </div>
+                    <div>
+                        <h3 class={`font-data-label text-[14px] font-bold text-white group-hover:text-${mod.colorClass} uppercase tracking-wider mb-1`}>{mod.title}</h3>
+                        <p class="font-body-md text-[12px] text-on-surface-variant">{mod.description}</p>
+                    </div>
+                </div>
+                <span class={`font-data-label text-[10px] text-[#333340] group-hover:text-${mod.colorClass}`}>&gt; RUN</span>
+            </a>
+        ))}
+    </div>
+</div>

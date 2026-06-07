@@ -1,0 +1,77 @@
+---
+interface DatabaseUpdate {
+    title: string;
+    image: string;
+    type: string;
+    typeLabel: string;
+    colorClass: "primary" | "secondary-container";
+    link: string;
+}
+
+const updates: DatabaseUpdate[] = [
+    {
+        title: "Liberty City Cycles Avarus",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBWclKx_MiLfeXI5zDfSm6HMtJOTfKnZHA-B8W3SK4UkUZ2cGmycjKjmamD7IMEVWnnuBVdUu4qq1IzTIKLdpRu1YkYrr23tH36m4j0U_BXA0if5LYpGrSZ0FNoBKPJ7iTVBf4Zv7Xbm20CVmXnYZSlj5rpQDCyBC_JR1a-i1MEprDDhDgbdJzDnWp9zmkTkTZlJXDI9wauLa46xmm9H3r6S35A6XqwFL1XOZTltgbQzblD4iPWkj9KRnTIZknmsCj--SBw28IrftM",
+        type: "Vehicles",
+        typeLabel: "Veh",
+        colorClass: "primary",
+        link: "/database"
+    },
+    {
+        title: "Leonida State",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUnflZCdmiPmgywY5dkUBtJ1b99sRc6vVg_mNbdgaIErsKgNjWcH5sn2DjKxnETicc12JEh_TVrOm8PyU0xTRqoFAEk7h46OPY4bI9ePy46VSx1uE8n6KFR6gsydc11OroXJy-aFbTxuUAck5Q1y74b-m9SZNHhKQmpaVJ480Yfk_sxIa_OUoHyMYPe3MwGg_O7DuRZGyWTpRDYR-LqOgBuT5tFiR2rEmGHLUjVuZ9sDTEbOtDgfp5UmczqjFRUrH3xG9cp7YRji4",
+        type: "Regions",
+        typeLabel: "Reg",
+        colorClass: "secondary-container",
+        link: "/map"
+    },
+    {
+        title: "Dirt Biking",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCrZJbls-_qd7gsoaKCsfl9Bzmwnuf1L3vZWp69izlUqRPpcon1E78u-XBfFWPsIJLbHcvuVFxd6C769Kf_njUaaNClovfyMTjzpKUWRo8j5jtkLL9nz2zZSBppZ1avmWE_lj5PAulD__vF8bghW2NWUCsfFuuZhB5o5lyhACwQuX6Usz9xaNzQQQtmgkVhsVJ_OdF3e4POr4GcW2FnfAAR9hkPFNBUNz7A_7n5n3hCMNWoTg_JP16L0agqRaraXlgkf-vhcC4al1w",
+        type: "Activities",
+        typeLabel: "Act",
+        colorClass: "secondary-container",
+        link: "/activities"
+    },
+    {
+        title: "SMG GTA VI",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjO0fEpMZcAlaogjGh0dRLX3C9m6WO1ulba-usFaUi-84mbstsasjY7GhPJdQUAuZj_BltlJ4u72R2tpcJqeXZGv7GJVMe8fYexTLWtkSJVuNqSqG3B7ElefIlmvItcUw3bcL8UmItMQkqUJzQmadW1XtFsZaqfj8czk4nudylkncywsLt_gdA1qk7dmYu3T_gRHS-DDkFkwWJOWl8fiVs1inRVBNWe4cbe7kPxHDsLI0lmjRiGRh3a6PAs8-96cag5V0RhXwsQQI",
+        type: "Weapons",
+        typeLabel: "Wpn",
+        colorClass: "primary",
+        link: "/database"
+    }
+];
+
+const categories = [...new Set(updates.map(u => u.type))];
+---
+
+<div class="col-span-12">
+    <div class="terminal-card rounded-sm">
+        <div class="terminal-header px-4 py-2 flex items-center justify-between">
+            <span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">&gt; DB_UPDATES.RECENT</span>
+            <div class="flex gap-2">
+                {categories.map(category => (
+                    <button class="text-[10px] font-data-label text-on-surface-variant hover:text-primary uppercase tracking-wider">[{category}]</button>
+                ))}
+            </div>
+        </div>
+        <div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {updates.map((update) => (
+                <a class={`bg-[#0a0a0c]/50 border border-[#333340] hover:border-${update.colorClass} rounded-sm overflow-hidden group transition-colors flex flex-col h-full relative`} href={update.link}>
+                    <div class="absolute top-0 right-0 p-1 z-10">
+                        <span class={`bg-${update.colorClass} text-black font-data-label text-[8px] px-1 uppercase font-bold ${update.colorClass === 'primary' ? 'shadow-[0_0_8px_rgba(var(--color-primary),0.5)]' : update.colorClass === 'secondary' ? 'shadow-[0_0_8px_rgba(var(--color-secondary),0.5)]' : 'shadow-[0_0_8px_rgba(var(--color-tertiary),0.5)]'}`}>
+                            {update.typeLabel}
+                        </span>
+                    </div>
+                    <div class="h-24 overflow-hidden border-b border-[#333340]">
+                        <img alt={update.title} loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src={update.image}>
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col justify-center bg-[#1a1a1f]/30">
+                        <h4 class={`font-data-label text-[12px] font-bold text-white group-hover:text-${update.colorClass} transition-colors text-center`}>{update.title}</h4>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</div>

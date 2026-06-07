@@ -1,0 +1,69 @@
+---
+interface NewsItem {
+    author: string;
+    date: string;
+    title: string;
+    link: string;
+    colorClass: "primary" | "secondary-container";
+    description?: string;
+    quoteSource?: string;
+    quoteText?: string;
+}
+
+const newsItems: NewsItem[] = [
+    {
+        author: "A.Hashmi",
+        date: "06.04.26",
+        title: "Devolver Digital Is the Only Publisher Not Afraid of GTA 6's Release Date",
+        link: "#",
+        colorClass: "secondary-container",
+        description: "As of writing, November 19, 2026, remains the release date for GTA 6, and Take-Two Interactive's CEO, Strauss Zelnick, continues to reassure…"
+    },
+    {
+        author: "P.Luu",
+        date: "06.04.26",
+        title: "Those GTA 6 Best Buy pre-order leaks? Zelnick shut them down",
+        link: "#",
+        colorClass: "primary",
+        quoteSource: "Destructoid",
+        quoteText: "GTA 6 is not being delayed to 2027"
+    },
+    {
+        author: "P.Luu",
+        date: "06.04.26",
+        title: "GTA 6's $1.5 billion budget is the moat no other studio can cross",
+        link: "#",
+        colorClass: "primary"
+    }
+];
+---
+
+<aside class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+    <div class="terminal-card rounded-sm flex flex-col h-full">
+        <div class="terminal-header px-4 py-2 flex items-center justify-between">
+            <span class="font-data-label text-[10px] text-primary uppercase tracking-widest">&gt; LATEST_COMMUNIQUES</span>
+        </div>
+        <div class="p-4 flex flex-col gap-6">
+            {newsItems.map((item) => (
+                <article class={`group border-l-2 border-[#333340] hover:border-${item.colorClass} pl-3 transition-colors`}>
+                    <div class="flex flex-col mb-1">
+                        <span class={`font-data-label text-[10px] text-${item.colorClass} uppercase tracking-wider`}>{item.author} // {item.date}</span>
+                    </div>
+                    <h3 class={`font-stat-value text-[16px] font-bold text-white mb-2 group-hover:text-${item.colorClass} transition-colors`}>
+                        <a href={item.link} class="">{item.title}</a>
+                    </h3>
+                    {item.description && (
+                        <p class="font-body-md text-[14px] text-on-surface-variant line-clamp-2 mb-2">{item.description}</p>
+                    )}
+                    {item.quoteSource && item.quoteText && (
+                        <div class="bg-[#0a0a0c]/50 p-2 border border-[#333340] mb-2 font-data-label text-[10px] text-secondary-container">
+                            &gt; [{item.quoteSource}] — {item.quoteText}
+                        </div>
+                    )}
+                </article>
+            ))}
+            
+            <a class="font-data-label text-[12px] text-secondary-container hover:text-white hover:bg-secondary-container/10 flex items-center justify-center gap-1 mt-auto transition-colors uppercase w-full py-3 border border-secondary-container/30 rounded-sm tracking-widest" href="/news">Access full archive <span class="material-symbols-outlined text-[14px]">chevron_right</span></a>
+        </div>
+    </div>
+</aside>

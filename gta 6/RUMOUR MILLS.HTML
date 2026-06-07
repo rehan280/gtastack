@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumors &amp; Leaks | GTA STACK</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&amp;family=JetBrains+Mono:wght@500&amp;family=Hanken+Grotesk:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#ff00bd",
+                      "secondary": "#00eefc",
+                      "tertiary": "#8b00ff",
+                      "background": "#0a0a0c",
+                      "surface": "#121215",
+                      "surface-container": "#1a1a1f",
+                      "surface-container-high": "#23232a",
+                      "on-surface": "#f0f0f5",
+                      "on-surface-variant": "#a0a0b0",
+                      "outline": "#333340",
+                      "secondary-container": "#00eefc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-sm": "12px",
+                      "stack-lg": "48px",
+                      "container-max": "1280px",
+                      "base": "8px",
+                      "stack-md": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "data-label": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-2xl": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "stat-value": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "data-label": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-2xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "900"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "stat-value": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Vice Protocol Aesthetic Styles */
+        body {
+            background-color: #0a0a0c;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 0, 189, 0.05), transparent 40%), 
+                radial-gradient(circle at 85% 30%, rgba(0, 238, 252, 0.05), transparent 40%),
+                linear-gradient(rgba(255,0,189,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,0,189,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            background-attachment: fixed;
+            color: #f0f0f5;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 83px, 0); }
+            5% { clip: rect(61px, 9999px, 13px, 0); }
+            10% { clip: rect(50px, 9999px, 20px, 0); }
+            15% { clip: rect(11px, 9999px, 60px, 0); }
+            20% { clip: rect(31px, 9999px, 15px, 0); }
+            25% { clip: rect(78px, 9999px, 98px, 0); }
+            30% { clip: rect(96px, 9999px, 2px, 0); }
+            35% { clip: rect(64px, 9999px, 47px, 0); }
+            40% { clip: rect(89px, 9999px, 18px, 0); }
+            45% { clip: rect(56px, 9999px, 86px, 0); }
+            50% { clip: rect(3px, 9999px, 32px, 0); }
+            55% { clip: rect(38px, 9999px, 88px, 0); }
+            60% { clip: rect(15px, 9999px, 91px, 0); }
+            65% { clip: rect(69px, 9999px, 44px, 0); }
+            70% { clip: rect(4px, 9999px, 22px, 0); }
+            75% { clip: rect(99px, 9999px, 79px, 0); }
+            80% { clip: rect(48px, 9999px, 5px, 0); }
+            85% { clip: rect(25px, 9999px, 73px, 0); }
+            90% { clip: rect(82px, 9999px, 61px, 0); }
+            95% { clip: rect(34px, 9999px, 41px, 0); }
+            100% { clip: rect(19px, 9999px, 58px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+
+        .terminal-card {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 189, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 189, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff00bd, transparent);
+            opacity: 0.5;
+        }
+
+        .terminal-card:hover {
+            border-color: rgba(255, 0, 189, 0.8);
+            box-shadow: 0 0 30px rgba(255, 0, 189, 0.2), inset 0 0 20px rgba(255, 0, 189, 0.1);
+        }
+        
+        .terminal-header {
+            border-bottom: 1px solid rgba(51, 51, 64, 0.8);
+            background: rgba(26, 26, 31, 0.5);
+        }
+
+        .input-neon {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333340;
+            transition: all 0.3s;
+        }
+        .input-neon:focus {
+            border-color: #ff00bd;
+            box-shadow: 0 0 15px rgba(255,0,189,0.3);
+            outline: none;
+        }
+
+        /* Custom Scrollbar for sleekness */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333340;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00bd;
+        }
+      </style>
+</head>
+<body class="font-body-md text-on-surface antialiased min-h-screen flex flex-col relative bg-background">
+<div class="scanlines"></div>
+<!-- TopNavBar -->
+<header class="bg-[#0a0a0c]/80 backdrop-blur-xl top-0 sticky border-b border-[#333340] z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2" href="/">
+<h1 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text" data-text="GTA STACK">GTA STACK</h1>
+<div class="hidden lg:flex flex-col ml-4">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest leading-none mb-1 opacity-80">&gt; SYS.COUNTDOWN:</span>
+<span class="font-data-label text-[12px] text-primary font-bold leading-none tracking-wider">166D:04H:31M <span class="text-secondary-container ml-2 text-[10px] uppercase border border-secondary-container/30 px-1 py-0.5 rounded-sm">Out Now</span></span>
+</div>
+</a>
+</div>
+<nav class="hidden lg:flex items-center gap-1">
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Vehicles</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Weapons</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Characters</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Regions</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Activities</a>
+<a class="text-primary font-data-label text-[12px] font-bold border-b-2 border-primary transition-colors px-3 py-2 uppercase tracking-wide" href="#">Rumors</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Games</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<a class="hidden md:flex text-secondary-container hover:text-primary font-data-label text-[12px] font-semibold transition-colors border border-secondary-container/30 px-3 py-1.5 rounded-sm uppercase tracking-wide" href="#">Sign in</a>
+<button class="lg:hidden text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[1440px] mx-auto px-4 md:px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+<!-- Left Column: Editorial Feed (Rumors & Leaks) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Section Header -->
+<header class="mb-8">
+<h1 class="font-headline-lg text-[40px] md:font-display-2xl md:text-[72px] text-white font-black leading-tight mb-2 drop-shadow-xl uppercase tracking-tight glitch-text" data-text="RUMOR MILL">RUMOR MILL</h1>
+<p class="font-data-label text-[12px] text-primary uppercase tracking-widest">Unverified Intel / Leak Archive / Source Validation</p>
+</header>
+<!-- Rumor Feed Card 1 -->
+<article class="terminal-card rounded-sm flex flex-col h-full relative group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+<div class="flex flex-col md:flex-row gap-6 p-6">
+<!-- Media/Thumbnail -->
+<div class="w-full md:w-48 h-32 bg-[#0a0a0c] border border-[#333340] rounded-sm overflow-hidden flex-shrink-0 relative group-hover:border-primary transition-colors">
+<img alt="Leak Thumbnail" class="w-full h-full object-cover opacity-60 mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500" data-alt="A shadowy, blurred photograph of what appears to be a modern sports car partially covered by a tarp in a dimly lit warehouse. The lighting is low and moody, evoking a clandestine reveal. The aesthetic matches an underground neo-noir cyber-heist vibe, with deep blacks and a subtle magenta rim light. The overall mood is mysterious and highly secretive." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM3icXtEj8lKQR10tcmidIyabLMccTUgT1VlE1iW1ZALVQjkp8AJkg3TvQN2cuBQwKOUxnr0P9oWc-ua2hOrffOZO79tgYPemozcCtlDCSx6cqttz7FMGznBrMFyz5JCKEsd0iAM8mAgz5QfqZKTWmk26ecdv5OYHdnWYFTlhkGABHtJu2fphnQ0tvcUQb2ELI5TYyEiCwO5lskkQvXDN9IwqJh5CUMTt8i5yI-IytueGMQu3PX86VQ9u6GSQYYX3mqtbRybpUN6o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-2 left-2 flex gap-2">
+<span class="bg-[#ff3333]/20 text-[#ff3333] border border-[#ff3333] font-data-label text-[8px] px-1 py-0.5 rounded-sm uppercase font-bold tracking-wider shadow-[0_0_10px_rgba(255,51,51,0.5)] backdrop-blur-sm">Image Leak</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-stat-value text-[24px] text-white font-bold leading-tight group-hover:text-primary transition-colors">Project Americas Map Expansion Alpha</h3>
+<!-- Credibility Badge -->
+<div class="flex items-center gap-1 bg-[#0a0a0c]/80 px-2 py-1 rounded-sm border border-secondary/30 ml-4 shrink-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">radar</span>
+<span class="font-data-label text-[10px] text-secondary">68% CRED</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant text-[14px] line-clamp-2 mb-4">
+                                Recent datamined strings suggest a dynamic map expansion system linked to the 'Project Americas' codename. Coordinates point to a multi-state functional area with seamless border transitions.
+                            </p>
+</div>
+<!-- Metadata / Source -->
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-[#333340]">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-data-label text-[10px] uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">person</span>
+<span class="">User_Ox19</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-data-label text-[10px] uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="">2H AGO</span>
+</div>
+</div>
+<button class="text-primary font-data-label text-[12px] uppercase hover:underline decoration-primary flex items-center gap-1 tracking-widest">
+                                View Details <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Rumor Feed Card 2 (High Credibility) -->
+<article class="terminal-card rounded-sm flex flex-col h-full relative group border-primary/50">
+<!-- Hot Card Gradient Border Top -->
+<div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-tertiary"></div>
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+<div class="flex flex-col md:flex-row gap-6 p-6">
+<div class="w-full md:w-48 h-32 bg-[#0a0a0c] border border-[#333340] rounded-sm overflow-hidden flex-shrink-0 relative group-hover:border-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-50 group-hover:text-primary transition-colors">code_blocks</span>
+<div class="absolute bottom-2 left-2 flex gap-2">
+<span class="bg-tertiary/20 text-tertiary border border-tertiary font-data-label text-[8px] px-1 py-0.5 rounded-sm uppercase font-bold tracking-wider shadow-[0_0_10px_rgba(139,0,255,0.5)] backdrop-blur-sm">Datamine</span>
+</div>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-stat-value text-[24px] text-white font-bold leading-tight group-hover:text-primary transition-colors">Advanced NPC Interaction Dialogue Trees</h3>
+<div class="flex items-center gap-1 bg-[#0a0a0c]/80 px-2 py-1 rounded-sm border border-primary/50 ml-4 shrink-0 shadow-[0_0_10px_rgba(255,0,189,0.3)]">
+<span class="material-symbols-outlined text-primary text-[16px]">verified</span>
+<span class="font-data-label text-[10px] text-primary">94% CRED</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant text-[14px] line-clamp-2 mb-4">
+                                Leaked source code snippets indicate a robust contextual dialogue system allowing players to threaten, bribe, or negotiate with almost any non-hostile NPC on the street.
+                            </p>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-[#333340]">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-data-label text-[10px] uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">person</span>
+<span class="">Tez2_Mirror</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-data-label text-[10px] uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="">5H AGO</span>
+</div>
+</div>
+<button class="text-primary font-data-label text-[12px] uppercase hover:underline decoration-primary flex items-center gap-1 tracking-widest">
+                                View Details <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Right Column: Terminal & Sidebar -->
+<aside class="lg:col-span-4 flex flex-col gap-6">
+<!-- Submit Terminal -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">terminal</span>
+<h2 class="font-data-label text-[14px] text-secondary tracking-widest uppercase">SECURE_DROP</h2>
+</div>
+<div class="p-6">
+<form class="flex flex-col gap-4 font-data-label text-[12px]">
+<div>
+<input class="w-full input-neon text-on-surface p-3 rounded-sm placeholder-on-surface-variant/50 focus:ring-0" placeholder="Alias (Optional)" type="text"/>
+</div>
+<div>
+<select class="w-full input-neon text-on-surface p-3 rounded-sm appearance-none focus:ring-0 cursor-pointer border border-[#333340]">
+<option class="bg-surface text-on-surface">Category: Code Leak</option>
+<option class="bg-surface text-on-surface">Category: Image/Video</option>
+<option class="bg-surface text-on-surface">Category: Insider Info</option>
+</select>
+</div>
+<div>
+<textarea class="w-full input-neon text-on-surface p-3 rounded-sm placeholder-on-surface-variant/50 focus:ring-0 resize-none h-32" placeholder="Input intel here..." rows="4"></textarea>
+</div>
+<button class="mt-2 bg-secondary-container/20 text-secondary-container border border-secondary-container py-3 px-4 rounded-sm font-bold uppercase tracking-wider hover:bg-secondary-container hover:text-black transition-colors flex justify-center items-center gap-2 group shadow-[0_0_15px_rgba(0,238,252,0.2)] hover:shadow-[0_0_20px_rgba(0,238,252,0.6)]" type="button">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>
+                        TRANSMIT DATA
+                    </button>
+<p class="text-[10px] text-on-surface-variant text-center mt-4 opacity-70 tracking-widest uppercase">End-to-end encrypted. IP logs purged hourly.</p>
+</form>
+</div>
+</div>
+<!-- Trending Theories List -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">local_fire_department</span>
+<h3 class="font-data-label text-[14px] text-primary tracking-widest uppercase">HOT THEORIES</h3>
+</div>
+<div class="p-4">
+<ul class="flex flex-col">
+<li class="py-4 border-b border-[#333340] last:border-0 group cursor-pointer flex gap-3 items-start hover:bg-[#1a1a1f]/50 transition-colors px-2 rounded-sm -mx-2">
+<span class="font-data-label text-[14px] text-primary mt-0.5">01</span>
+<div>
+<p class="font-stat-value text-[14px] text-white group-hover:text-primary transition-colors font-bold leading-tight mb-2">Dual-Protagonist Switching Mechanic requires active phone call</p>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">452 Votes • 89 Comments</p>
+</div>
+</li>
+<li class="py-4 border-b border-[#333340] last:border-0 group cursor-pointer flex gap-3 items-start hover:bg-[#1a1a1f]/50 transition-colors px-2 rounded-sm -mx-2">
+<span class="font-data-label text-[14px] text-primary mt-0.5">02</span>
+<div>
+<p class="font-stat-value text-[14px] text-white group-hover:text-primary transition-colors font-bold leading-tight mb-2">Crypto-currency market replaces traditional stock exchange</p>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">310 Votes • 42 Comments</p>
+</div>
+</li>
+<li class="py-4 border-b border-[#333340] last:border-0 group cursor-pointer flex gap-3 items-start hover:bg-[#1a1a1f]/50 transition-colors px-2 rounded-sm -mx-2">
+<span class="font-data-label text-[14px] text-primary mt-0.5">03</span>
+<div>
+<p class="font-stat-value text-[14px] text-white group-hover:text-primary transition-colors font-bold leading-tight mb-2">Map expands over time via live-service 'Seasons'</p>
+<p class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">288 Votes • 115 Comments</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</aside>
+</main>
+<!-- FOOTER -->
+<footer class="bg-[#0a0a0c] border-t border-primary/30 pt-16 pb-8 relative overflow-hidden z-10">
+<div class="absolute inset-0 opacity-5 pointer-events-none">
+<div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(255,0,189,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,189,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+</div>
+<div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="space-y-6">
+<h2 class="font-display-2xl text-[32px] text-primary italic tracking-tighter uppercase glitch-text" data-text="GTA STACK">GTA STACK</h2>
+<p class="font-data-label text-[12px] text-on-surface-variant leading-relaxed uppercase tracking-wider">The definitive intelligence hub for the next generation of open-world gaming. Real-time datamining, community-driven theories, and verified leak archives.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#"><span class="material-symbols-outlined text-lg">share</span></a>
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-secondary hover:text-secondary transition-all" href="#"><span class="material-symbols-outlined text-lg">rss_feed</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-primary/30 pb-2 inline-block">Intelligence</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-primary transition-colors" href="#">Map Database</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Vehicle Specs</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Character Bios</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Mission Logs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-secondary/30 pb-2 inline-block">Community</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Theory Board</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Leak Archive</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Member Ranks</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Discord Server</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-tertiary/30 pb-2 inline-block">Resources &amp; Legal</h4>
+<div class="grid grid-cols-2 gap-4">
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-tertiary transition-colors" href="#">API Access</a></li>
+<li class=""><a class="hover:text-tertiary transition-colors" href="#">Media Kit</a></li>
+<li class=""><a class="hover:text-tertiary transition-colors" href="#">Bug Bounty</a></li>
+<li class=""><a class="hover:text-tertiary transition-colors" href="#">Site Status</a></li>
+</ul>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Terms of Use</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">DMCA Policy</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Cookie Settings</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-[#333340] flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-data-label text-[9px] tracking-widest uppercase text-on-surface-variant/40 text-center md:text-left">
+        © 2024 GTA STACK. INDEPENDENT RESEARCH ENTITY. NOT AFFILIATED WITH ROCKSTAR GAMES.
+      </p>
+<div class="flex gap-6 font-data-label text-[10px] text-on-surface-variant/50 uppercase tracking-widest">
+<span class="">SEO Optimized</span>
+<span class="">AEO Ready</span>
+<span class="">Encrypted Node</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

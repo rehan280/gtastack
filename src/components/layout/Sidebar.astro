@@ -1,0 +1,94 @@
+---
+import { GTA6_RELEASE_DATE } from "@/config/site";
+
+const categories = [
+  { label: "Vehicles", count: "412", href: "/vehicles", icon: "directions_car" },
+  { label: "Weapons", count: "98", href: "/database#weapons", icon: "swords" },
+  { label: "Characters", count: "64", href: "/database#characters", icon: "groups" },
+  { label: "Locations", count: "230", href: "/map", icon: "location_on" },
+  { label: "Missions", count: "76", href: "/database#missions", icon: "flag" },
+];
+---
+
+<aside class="hidden w-64 shrink-0 xl:block" aria-label="Database categories">
+  <div class="sticky top-20 flex flex-col gap-stack-md">
+    <!-- Countdown HUD -->
+    <div class="terminal-card p-4">
+      <p class="font-data-label text-[10px] uppercase tracking-[0.2em] text-secondary">
+        // Launch Sequence
+      </p>
+      <p class="mt-2 font-headline-lg text-2xl font-black text-on-surface" id="countdown">
+        --:--:--:--
+      </p>
+      <p class="mt-1 font-data-label text-[10px] text-on-surface-variant">
+        Days : Hrs : Min : Sec
+      </p>
+      <div class="hud-gauge mt-3">
+        {
+          Array.from({ length: 10 }).map((_, i) => (
+            <span
+              class:list={[
+                "hud-gauge-segment",
+                i < 6 ? "active-secondary" : "",
+              ]}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Category list -->
+    <nav class="terminal-card p-2" aria-label="Database">
+      <p
+        class="px-3 py-2 font-data-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant"
+      >
+        // Database Index
+      </p>
+      <ul class="flex flex-col gap-0.5">
+        {
+          categories.map((c) => (
+            <li>
+              <a
+                href={c.href}
+                class="group flex items-center justify-between border-l-2 border-transparent px-3 py-2.5 transition-all hover:border-primary hover:bg-primary/5"
+              >
+                <span class="flex items-center gap-2.5">
+                  <span class="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-primary">
+                    {c.icon}
+                  </span>
+                  <span class="font-data-label text-xs uppercase tracking-wider text-on-surface group-hover:text-primary">
+                    {c.label}
+                  </span>
+                </span>
+                <span class="font-data-label text-[10px] text-on-surface-variant">
+                  {c.count}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<script define:vars={{ release: GTA6_RELEASE_DATE }}>
+  const target = new Date(release).getTime();
+  const el = document.getElementById("countdown");
+  function tick() {
+    if (!el) return;
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      el.textContent = "LIVE";
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = (n) => String(n).padStart(2, "0");
+    el.textContent = `${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>

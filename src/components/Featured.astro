@@ -1,0 +1,82 @@
+---
+interface FeaturedArticle {
+    title: string;
+    description?: string;
+    image: string;
+    category: string;
+    author?: string;
+    date?: string;
+    isMain: boolean;
+    link: string;
+}
+
+const articles: FeaturedArticle[] = [
+    {
+        title: "GTA 6 All Safehouses",
+        description: "There are bound to be a number of safehouses in GTA 6, and while it's too early to tell definitively which buildings and locations will…",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDVU1q5GEJWhyXkpwLle1wvU9KvHlm1FJS6DRJlCrmpAvAcqoIG7t_iOBa98Oqvc6V6O3m4tJyGF_b4hrOOTI7lRhC1xu4xGa-xnMPfPRJyZd2IU0R0Q9lTO-0rFouR6c2SWefbL-nQF-Os2BAOTugx3_Bek1gHjm5lPX1mNmbHTh367LyzSE2aW9rvSZUwTEmHy3k-McY5pkgb2aaeHoTjaaao0M-eToYhMnB6MFHtthZO37oiVS6UOUlDyVyQPnDaD2zuVeYzkMk",
+        category: "Featured_File",
+        author: "KF.Ferreira",
+        date: "05.29.2026",
+        isMain: true,
+        link: "/news"
+    },
+    {
+        title: "GTA 6 Character Customization - Everything We Know So Far",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBX2q2xTO9vRdAj6uevg5r3DnHoZabT2B4IritqH51lM_5k29gi--vkCGG7fCHZ6a_B1X3U6wJ98vzoEFiY39gRnYV-1RkLeoTrUXUWHFT648QCQqv4IFsY3Zzx0J3aSkocWJjTOqKizWAEZJZP8A-e2ySNPLCfqfX-7-sjd74f7yH3ZxOORYHkzKWJJiQYQoelTiiKMkOHiQ8ivyz7QhxhsFgMceCgDe48ZDrLoMtdDEv2wubvK7i7Fnl7-ryoPBU0ZoSRrkupTUw",
+        category: "[GUIDES]",
+        isMain: false,
+        link: "/guides"
+    },
+    {
+        title: "GTA 6 Weather System Explained - Confirmed and Rumored Weather Events",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuApGKBjtVBJTtWrYkHMb6MxnWo_FrwV65qFWrFzpBP4A3BL6f7Bstz4V3rfFVmFJMBQ1DmdmcLGpwfvMVVg6DCnu_eAvXsNh8PYw0hkG9FR4JzWan35aqfi-KU5977zNvn5KK94SPspViavQ1bbk4QsyLOsj6kyq-5I7_P33-YjE6dfmkO6EoS8Rd4ME04LixUFTiGZmCZ_VZlped1BBzhvUmax7EyVQOK4CccxVNXtmuFwVUDWRtlYxOH0Tt_M47sGIFmX0CRO3D8",
+        category: "[GUIDES]",
+        isMain: false,
+        link: "/guides"
+    }
+];
+
+const mainArticle = articles.find(a => a.isMain);
+const secondaryArticles = articles.filter(a => !a.isMain);
+---
+
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+    <div class="terminal-card rounded-sm flex flex-col h-full">
+        <div class="terminal-header px-4 py-2 flex items-center justify-between">
+            <span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest">&gt; INTEL_FEED.FEATURED</span>
+            <span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,189,0.8)]"></span>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Featured Main -->
+            {mainArticle && (
+                <a class="relative group rounded-sm overflow-hidden md:col-span-2 md:h-[400px] block border border-[#333340] hover:border-primary transition-colors" href={mainArticle.link}>
+                    <img alt={mainArticle.title} loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal" src={mainArticle.image}>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6 w-full">
+                        <span class="bg-primary/20 text-primary border border-primary/50 font-data-label text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm mb-3 inline-block backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,189,0.3)]">{mainArticle.category}</span>
+                        <h2 class="font-stat-value text-[24px] md:text-[32px] text-white font-bold leading-tight mb-2 group-hover:text-primary transition-colors drop-shadow-md">{mainArticle.title}</h2>
+                        <p class="font-body-md text-on-surface-variant text-[14px] md:text-[16px] line-clamp-2 max-w-2xl">{mainArticle.description}</p>
+                        <div class="flex items-center gap-2 mt-4 font-data-label text-[12px]">
+                            <span class="text-secondary-container">{mainArticle.author}</span>
+                            <span class="text-[#333340]">|</span>
+                            <span class="text-on-surface-variant">{mainArticle.date}</span>
+                        </div>
+                    </div>
+                </a>
+            )}
+            
+            <!-- Secondary Cards -->
+            {secondaryArticles.map((article) => (
+                <a class="relative group rounded-sm overflow-hidden h-[200px] block border border-[#333340] hover:border-secondary transition-colors" href={article.link}>
+                    <img alt={article.title} loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70 group-hover:opacity-100" src={article.image}>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4 w-full">
+                        <span class="text-secondary-container font-data-label text-[10px] uppercase tracking-wider mb-1 inline-block">{article.category}</span>
+                        <h3 class="font-stat-value text-[16px] text-white font-bold leading-tight group-hover:text-secondary-container transition-colors">{article.title}</h3>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GTA STACK - Regions &amp; Map</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ff00bd",
+                        "secondary": "#00eefc",
+                        "tertiary": "#8b00ff",
+                        "background": "#0a0a0c",
+                        "surface": "#121215",
+                        "surface-container": "#1a1a1f",
+                        "surface-container-high": "#23232a",
+                        "on-surface": "#f0f0f5",
+                        "on-surface-variant": "#a0a0b0",
+                        "outline": "#333340",
+                        "secondary-container": "#00eefc",
+                        "surface-variant": "#333340"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Inter"],
+                        "stat-value": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "data-label": ["JetBrains Mono"],
+                        "display-2xl": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+/* Vice Protocol Aesthetic Styles */
+body {
+    background-color: #0a0a0c;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(255, 0, 189, 0.05), transparent 40%), 
+        radial-gradient(circle at 85% 30%, rgba(0, 238, 252, 0.05), transparent 40%),
+        linear-gradient(rgba(255,0,189,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,189,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+    background-attachment: fixed;
+    color: #f0f0f5;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+}
+
+.glitch-text {
+    position: relative;
+}
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(10px, 9999px, 83px, 0); }
+    5% { clip: rect(61px, 9999px, 13px, 0); }
+    10% { clip: rect(50px, 9999px, 20px, 0); }
+    15% { clip: rect(11px, 9999px, 60px, 0); }
+    20% { clip: rect(31px, 9999px, 15px, 0); }
+    25% { clip: rect(78px, 9999px, 98px, 0); }
+    30% { clip: rect(96px, 9999px, 2px, 0); }
+    35% { clip: rect(64px, 9999px, 47px, 0); }
+    40% { clip: rect(89px, 9999px, 18px, 0); }
+    45% { clip: rect(56px, 9999px, 86px, 0); }
+    50% { clip: rect(3px, 9999px, 32px, 0); }
+    55% { clip: rect(38px, 9999px, 88px, 0); }
+    60% { clip: rect(15px, 9999px, 91px, 0); }
+    65% { clip: rect(69px, 9999px, 44px, 0); }
+    70% { clip: rect(4px, 9999px, 22px, 0); }
+    75% { clip: rect(99px, 9999px, 79px, 0); }
+    80% { clip: rect(48px, 9999px, 5px, 0); }
+    85% { clip: rect(25px, 9999px, 73px, 0); }
+    90% { clip: rect(82px, 9999px, 61px, 0); }
+    95% { clip: rect(34px, 9999px, 41px, 0); }
+    100% { clip: rect(19px, 9999px, 58px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    5% { clip: rect(52px, 9999px, 74px, 0); }
+    10% { clip: rect(79px, 9999px, 85px, 0); }
+    15% { clip: rect(75px, 9999px, 5px, 0); }
+    20% { clip: rect(67px, 9999px, 61px, 0); }
+    25% { clip: rect(14px, 9999px, 79px, 0); }
+    30% { clip: rect(1px, 9999px, 66px, 0); }
+    35% { clip: rect(86px, 9999px, 30px, 0); }
+    40% { clip: rect(23px, 9999px, 98px, 0); }
+    45% { clip: rect(85px, 9999px, 72px, 0); }
+    50% { clip: rect(71px, 9999px, 75px, 0); }
+    55% { clip: rect(2px, 9999px, 48px, 0); }
+    60% { clip: rect(30px, 9999px, 16px, 0); }
+    65% { clip: rect(59px, 9999px, 50px, 0); }
+    70% { clip: rect(41px, 9999px, 62px, 0); }
+    75% { clip: rect(2px, 9999px, 82px, 0); }
+    80% { clip: rect(47px, 9999px, 73px, 0); }
+    85% { clip: rect(3px, 9999px, 27px, 0); }
+    90% { clip: rect(26px, 9999px, 55px, 0); }
+    95% { clip: rect(42px, 9999px, 97px, 0); }
+    100% { clip: rect(38px, 9999px, 49px, 0); }
+}
+
+.terminal-card {
+    background: rgba(18, 18, 21, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 0, 189, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 189, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.terminal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff00bd, transparent);
+    opacity: 0.5;
+}
+
+.terminal-card:hover {
+    border-color: rgba(255, 0, 189, 0.8);
+    box-shadow: 0 0 30px rgba(255, 0, 189, 0.2), inset 0 0 20px rgba(255, 0, 189, 0.1);
+}
+
+.terminal-header {
+    border-bottom: 1px solid rgba(51, 51, 64, 0.8);
+    background: rgba(26, 26, 31, 0.5);
+}
+
+.hud-gauge {
+    display: flex;
+    gap: 1px;
+    height: 4px;
+    transform: skewX(-15deg);
+}
+.hud-gauge-segment {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border-radius: 0;
+}
+.hud-gauge-segment.active-primary {
+    background: #ff00bd;
+    box-shadow: 0 0 4px #ff00bd, 0 0 10px rgba(255,0,189,0.5);
+}
+.hud-gauge-segment.active-secondary {
+    background: #00eefc;
+    box-shadow: 0 0 4px #00eefc, 0 0 10px rgba(0,238,252,0.5);
+}
+
+.input-neon {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #333340;
+    transition: all 0.3s;
+}
+.input-neon:focus {
+    border-color: #ff00bd;
+    box-shadow: 0 0 15px rgba(255,0,189,0.3);
+    outline: none;
+}
+
+.nav-link-active {
+    position: relative;
+    color: #ff00bd;
+}
+.nav-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #ff00bd;
+    box-shadow: 0 0 10px #ff00bd;
+}
+
+/* Custom Scrollbar for sleekness */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+    background: #333340;
+    border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ff00bd;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+}
+</style>
+</head>
+<body class="antialiased min-h-screen flex font-body-md text-body-md text-on-surface">
+<div class="scanlines"></div>
+<!-- SIDE NAV -->
+<nav class="hidden lg:flex flex-col fixed left-0 top-0 h-full z-40 bg-[#0a0a0c]/90 backdrop-blur-md border-r border-[#333340] shadow-2xl w-64 pt-6 pb-6">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-4 mb-6">
+<img alt="User Profile" class="w-12 h-12 rounded-sm border border-primary/50 shadow-[0_0_10px_rgba(255,0,189,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIiCrlodbcF4DHEh-PeTaWvmHXih-i2-Nq-UbTUQpmoBVHcMMKt-EeTy231IrqErbyraxzhqm5PFzRpDgKHtZrDqS5fm5RDNVOMD_at3sLiI5Lgc7dH1WD2QmM-GPGkuTwJAW0SjCIt7iGmub3s9z60EMeGz-syKLS4OY6heiiCtugUv88MhFlZvFZ6cmEOSXDfUge8svz4_SBamY_omRgvsCUv_GUdO5IGHTip0UmncOobmp9hs-Kx3wAcDOmYkOrdmWBvoLB9b4"/>
+<div>
+<h2 class="font-headline-lg-mobile text-[16px] text-on-surface uppercase tracking-wider">OPERATIVE</h2>
+<p class="font-data-label text-[12px] text-primary opacity-80">Rank 124</p>
+</div>
+</div>
+<button class="w-full bg-primary/10 border border-primary hover:bg-primary hover:text-black text-primary font-data-label text-[12px] py-2 rounded-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_15px_rgba(255,0,189,0.2)]">
+                GET PRO ACCESS
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-2 space-y-1">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Vehicles</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Weapons</span>
+</a>
+<a class="bg-primary/20 text-primary border-l-2 border-primary px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Map</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Cheats</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Calculators</span>
+</a>
+</div>
+<div class="px-2 mt-auto pt-6 border-t border-[#333340]">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Settings</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 hover:translate-x-1 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-data-label text-[12px] uppercase tracking-wider">Support</span>
+</a>
+</div>
+</nav>
+<!-- MAIN CONTENT CANVAS -->
+<main class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-[#0a0a0c]/80 backdrop-blur-xl top-0 sticky border-b border-[#333340] z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-8 h-16 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2" href="/">
+<h1 class="font-display-2xl text-[24px] uppercase italic tracking-tighter text-primary drop-shadow-[0_0_10px_rgba(255,0,189,0.8)] glitch-text" data-text="GTA STACK">GTA STACK</h1>
+<div class="hidden lg:flex flex-col ml-4">
+<span class="font-data-label text-[10px] text-secondary-container uppercase tracking-widest leading-none mb-1 opacity-80">&gt; SYS.COUNTDOWN:</span>
+<span class="font-data-label text-[12px] text-primary font-bold leading-none tracking-wider">166D:04H:31M <span class="text-secondary-container ml-2 text-[10px] uppercase border border-secondary-container/30 px-1 py-0.5 rounded-sm">Out Now</span></span>
+</div>
+</a>
+</div>
+<nav class="hidden lg:flex items-center gap-1">
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Vehicles</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Weapons</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Characters</a>
+<a class="nav-link-active font-data-label text-[12px] font-semibold px-3 py-2 uppercase tracking-wide" href="#">Regions</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Activities</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Rumors</a>
+<a class="text-on-surface hover:text-primary font-data-label text-[12px] font-semibold transition-colors px-3 py-2 uppercase tracking-wide" href="#">Games</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<a class="hidden md:flex text-secondary-container hover:text-primary font-data-label text-[12px] font-semibold transition-colors border border-secondary-container/30 px-3 py-1.5 rounded-sm uppercase tracking-wide" href="#">Sign in</a>
+<button class="lg:hidden text-secondary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- PAGE CONTENT -->
+<div class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-8 py-8 relative z-10" role="main">
+<!-- Header Section -->
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]" style="font-variation-settings: 'FILL' 1;">map</span>
+<h2 class="font-headline-lg text-[32px] md:text-[40px] text-on-surface uppercase tracking-tight glitch-text" data-text="LEONIDA TERRITORY">LEONIDA TERRITORY</h2>
+</div>
+<p class="font-data-label text-[12px] text-on-surface-variant max-w-2xl leading-relaxed">Geospatial intelligence and live territory metrics for the greater Leonida state. Access district data, safehouses, and high-value target zones.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container/80 border border-[#333340] backdrop-blur-xl px-4 py-2 rounded-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">cell_tower</span>
+<span class="font-data-label text-[12px] text-primary uppercase tracking-widest">LIVE DATA</span>
+</div>
+</div>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+<!-- Main Map Module (Span 8) -->
+<div class="xl:col-span-8 flex flex-col gap-6">
+<!-- The Map Container -->
+<div class="terminal-card rounded-sm h-[600px] flex flex-col group">
+<div class="terminal-header px-4 py-2 flex items-center justify-between z-10">
+<div class="flex gap-2">
+<button class="bg-[#1a1a1f]/50 border border-[#333340] text-white font-data-label text-[10px] px-3 py-1 rounded-sm hover:border-primary transition-colors flex items-center gap-1 uppercase tracking-widest">
+<span class="material-symbols-outlined text-[14px]">layers</span>
+                                    LAYERS
+                                </button>
+<button class="bg-[#1a1a1f]/50 border border-[#333340] text-white font-data-label text-[10px] px-3 py-1 rounded-sm hover:border-primary transition-colors flex items-center gap-1 uppercase tracking-widest">
+<span class="material-symbols-outlined text-[14px]">filter_alt</span>
+                                    FILTER
+                                </button>
+</div>
+<div class="font-data-label text-[10px] text-secondary uppercase tracking-widest flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_rgba(0,238,252,1)] animate-pulse"></span>
+                                SYNCED: 0.2s AGO
+                            </div>
+</div>
+<div class="relative flex-1 overflow-hidden">
+<!-- Map Image Placeholder -->
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" data-alt="A highly detailed, stylized satellite map of a fictional, neon-drenched coastal city resembling a modern Vice City. The map is viewed from a top-down perspective, highlighting distinct districts with glowing neon outlines in pink and cyan. Dark ocean waters contrast with the dense, gridded city blocks. The aesthetic is neo-noir vaporwave, resembling a high-tech tactical interface or hacker's data hub." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnlsedcE72QTDzRRgmcBPrZxnyUpV_Qx5npLM96LeSYxbHDeFRa4vYw68H4mwPY5uUJx1JIMf9-qPmVrtgw31cmcKylhBEgonMdzRqFrXi6FMt42Bgtz-FB4Hi8m4th40fKekDf7I1OOiYRmnavkLIzIz87xtbnxokuxgyejKcLMZJAJhj99v0djrFUdISSw4doVcG8zs5izkiqOPBZFxesTGJDuJEHR6UIHakHffYq2BerpOoeXFW6gI4LpGWwK37J6DhUClNFqU')">
+<!-- Overlay to dim background slightly -->
+<div class="absolute inset-0 bg-[#0a0a0c]/60"></div>
+</div>
+<!-- Map Interactive Points (Simulated) -->
+<div class="absolute top-1/4 left-1/3 z-10 cursor-pointer group/pin">
+<div class="w-4 h-4 rounded-full bg-primary border-2 border-[#0a0a0c] shadow-[0_0_15px_rgba(255,0,189,0.8)] relative z-20"></div>
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#121215] border border-primary/50 text-white font-data-label text-[10px] px-2 py-1 rounded-sm opacity-0 group-hover/pin:opacity-100 transition-opacity whitespace-nowrap backdrop-blur-md uppercase tracking-widest shadow-[0_0_10px_rgba(255,0,189,0.2)]">Vice Point</div>
+</div>
+<div class="absolute top-1/2 right-1/4 z-10 cursor-pointer group/pin">
+<div class="w-4 h-4 rounded-full bg-secondary border-2 border-[#0a0a0c] shadow-[0_0_15px_rgba(0,238,252,0.8)] relative z-20"></div>
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#121215] border border-secondary/50 text-white font-data-label text-[10px] px-2 py-1 rounded-sm opacity-0 group-hover/pin:opacity-100 transition-opacity whitespace-nowrap backdrop-blur-md uppercase tracking-widest shadow-[0_0_10px_rgba(0,238,252,0.2)]">Ocean Beach Safehouse</div>
+</div>
+<!-- Map UI Overlay: Bottom Controls -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-2 z-10">
+<button class="w-8 h-8 bg-[#1a1a1f]/80 backdrop-blur-md border border-[#333340] rounded-sm flex items-center justify-center text-white hover:border-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-8 h-8 bg-[#1a1a1f]/80 backdrop-blur-md border border-[#333340] rounded-sm flex items-center justify-center text-white hover:border-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-8 h-8 mt-2 bg-primary/20 backdrop-blur-md border border-primary/50 rounded-sm flex items-center justify-center text-primary hover:bg-primary/30 transition-colors shadow-[0_0_10px_rgba(255,0,189,0.2)]">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Weather & Environment Module -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="terminal-card rounded-sm p-4 flex flex-col">
+<div class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-2">CURRENT WEATHER</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[24px] drop-shadow-[0_0_8px_rgba(0,238,252,0.8)]">thunderstorm</span>
+<span class="font-stat-value text-[20px] text-white">Stormy</span>
+</div>
+</div>
+<div class="terminal-card rounded-sm p-4 flex flex-col">
+<div class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-2">TEMPERATURE</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px] drop-shadow-[0_0_8px_rgba(255,0,189,0.8)]">thermostat</span>
+<span class="font-stat-value text-[20px] text-white">82°F</span>
+</div>
+</div>
+<div class="terminal-card rounded-sm p-4 flex flex-col">
+<div class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-2">TIME</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white text-[24px]">schedule</span>
+<span class="font-stat-value text-[20px] text-white">23:45</span>
+</div>
+</div>
+<div class="terminal-card rounded-sm p-4 flex flex-col">
+<div class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest mb-2">VISIBILITY</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#ff3333] text-[24px] drop-shadow-[0_0_8px_rgba(255,51,51,0.8)]">visibility_off</span>
+<span class="font-stat-value text-[20px] text-white">Low</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Data Panel (Span 4) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<!-- Region Selector -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-3 flex items-center justify-between">
+<h2 class="font-data-label text-[12px] text-secondary-container uppercase tracking-widest">&gt; DISTRICT SELECT</h2>
+</div>
+<div class="p-4 flex flex-col gap-2 font-data-label text-[12px] uppercase tracking-wider">
+<button class="w-full text-left bg-[#1a1a1f]/50 border border-[#333340] p-3 rounded-sm text-white hover:border-primary/50 hover:bg-[#23232a]/50 transition-all flex justify-between items-center group">
+                                Vice City Metro
+                                <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[16px]">chevron_right</span>
+</button>
+<button class="w-full text-left bg-primary/10 border border-primary p-3 rounded-sm text-primary flex justify-between items-center shadow-[inset_0_0_20px_rgba(255,0,189,0.1)]">
+                                Leonida Keys
+                                <span class="material-symbols-outlined text-primary text-[16px]">my_location</span>
+</button>
+<button class="w-full text-left bg-[#1a1a1f]/50 border border-[#333340] p-3 rounded-sm text-white hover:border-primary/50 hover:bg-[#23232a]/50 transition-all flex justify-between items-center group">
+                                Ambrosia
+                                <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[16px]">chevron_right</span>
+</button>
+<button class="w-full text-left bg-[#1a1a1f]/50 border border-[#333340] p-3 rounded-sm text-white hover:border-primary/50 hover:bg-[#23232a]/50 transition-all flex justify-between items-center group">
+                                Kelly County
+                                <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Selected District Data Card -->
+<div class="terminal-card rounded-sm flex-1 flex flex-col p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-lg text-[24px] uppercase leading-tight text-white">LEONIDA KEYS</h3>
+<div class="font-data-label text-[10px] text-[#ff3333] mt-1 uppercase tracking-widest border border-[#ff3333]/30 inline-block px-2 py-0.5 bg-[#ff3333]/10">THREAT LEVEL: MODERATE</div>
+</div>
+<div class="w-10 h-10 rounded-sm bg-[#121215] border border-[#333340] flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">sailing</span>
+</div>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between items-center border-b border-[#333340] pb-2">
+<span class="font-data-label text-[10px] uppercase tracking-widest text-on-surface-variant">Controlling Faction</span>
+<span class="font-data-label text-[12px] text-white">Cartel</span>
+</div>
+<div class="flex justify-between items-center border-b border-[#333340] pb-2">
+<span class="font-data-label text-[10px] uppercase tracking-widest text-on-surface-variant">Known Safehouses</span>
+<span class="font-data-label text-[12px] text-white">3</span>
+</div>
+<div class="flex justify-between items-center border-b border-[#333340] pb-2">
+<span class="font-data-label text-[10px] uppercase tracking-widest text-on-surface-variant">Vehicle Density</span>
+<span class="font-data-label text-[12px] text-secondary">High (Watercraft)</span>
+</div>
+<div class="flex justify-between items-center border-b border-[#333340] pb-2">
+<span class="font-data-label text-[10px] uppercase tracking-widest text-on-surface-variant">Police Presence</span>
+<span class="font-data-label text-[12px] text-white">Low</span>
+</div>
+</div>
+<!-- Territory Progress Bar -->
+<div class="mt-auto">
+<div class="flex justify-between font-data-label text-[10px] mb-2 text-on-surface-variant uppercase tracking-widest">
+<span class="">EXPLORATION</span>
+<span class="">42%</span>
+</div>
+<div class="hud-gauge h-2">
+<div class="hud-gauge-segment active-primary"></div><div class="hud-gauge-segment active-primary"></div><div class="hud-gauge-segment active-primary"></div><div class="hud-gauge-segment active-primary"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div><div class="hud-gauge-segment"></div>
+</div>
+</div>
+</div>
+<!-- Recent Logs Log -->
+<div class="terminal-card rounded-sm flex flex-col">
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+<span class="font-data-label text-[10px] text-on-surface-variant uppercase tracking-widest">&gt; RECENTLY UPDATED</span>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<div class="flex gap-3 group cursor-pointer border-l-2 border-transparent hover:border-primary pl-2 transition-colors">
+<div class="flex-1">
+<div class="font-data-label text-[12px] text-white group-hover:text-primary transition-colors">Gator Keys Stash House</div>
+<div class="font-data-label text-[10px] text-on-surface-variant">Added by x_Ghost_x • 2h ago</div>
+</div>
+</div>
+<div class="flex gap-3 group cursor-pointer border-l-2 border-transparent hover:border-secondary pl-2 transition-colors">
+<div class="flex-1">
+<div class="font-data-label text-[12px] text-white group-hover:text-secondary transition-colors">Marina Weapon Spawn</div>
+<div class="font-data-label text-[10px] text-on-surface-variant">Verified by System • 5h ago</div>
+</div>
+</div>
+<div class="flex gap-3 group cursor-pointer border-l-2 border-transparent hover:border-primary pl-2 transition-colors">
+<div class="flex-1">
+<div class="font-data-label text-[12px] text-white group-hover:text-primary transition-colors">Bridge Toll Bypass</div>
+<div class="font-data-label text-[10px] text-on-surface-variant">Updated by OPERATIVE • 1d ago</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="bg-[#0a0a0c] border-t border-primary/30 pt-16 pb-8 relative overflow-hidden mt-auto lg:ml-64 z-10">
+<div class="absolute inset-0 opacity-5 pointer-events-none">
+<div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(255,0,189,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,189,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+</div>
+<div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<div class="space-y-6">
+<h2 class="font-display-2xl text-[32px] text-primary italic tracking-tighter uppercase glitch-text" data-text="GTA STACK">GTA STACK</h2>
+<p class="font-data-label text-[12px] text-on-surface-variant leading-relaxed uppercase tracking-wider">
+          The definitive intelligence hub for the Leonida criminal underworld. Real-time telemetry, weapon specs, and tactical maps.
+        </p>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-primary/30 pb-2 inline-block">Registry</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-primary transition-colors" href="#">Super Cars</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Weaponry</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Tactical Gear</a></li>
+<li class=""><a class="hover:text-primary transition-colors" href="#">Property</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-secondary/30 pb-2 inline-block">Resources</h4>
+<ul class="space-y-3 font-data-label text-[12px] text-on-surface-variant uppercase tracking-wider">
+<li class=""><a class="hover:text-secondary transition-colors" href="#">API Access</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Map Editor</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Cheat Codes</a></li>
+<li class=""><a class="hover:text-secondary transition-colors" href="#">Calculators</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-data-label text-white text-[14px] mb-6 uppercase tracking-widest border-b border-tertiary/30 pb-2 inline-block">Connect</h4>
+<div class="flex gap-4 mb-6">
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#"><span class="material-symbols-outlined text-lg">share</span></a>
+<a class="w-10 h-10 rounded-sm border border-[#333340] flex items-center justify-center hover:border-secondary hover:text-secondary transition-all" href="#"><span class="material-symbols-outlined text-lg">rss_feed</span></a>
+</div>
+<p class="font-data-label text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Status: <span class="text-[#00ff88]">All Systems Operational</span></p>
+</div>
+</div>
+<div class="pt-8 border-t border-[#333340] flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2 font-data-label text-[10px] tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Legal</a>
+</div>
+<p class="font-data-label text-[9px] tracking-widest uppercase text-on-surface-variant/40 text-center md:text-right">
+        © 2026 GTA STACK PROTOCOL // ALL RIGHTS RESERVED. NOT AFFILIATED WITH ROCKSTAR GAMES.
+      </p>
+</div>
+</div>
+</footer>
+</main>
+</body></html>
